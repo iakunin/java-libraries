@@ -42,8 +42,8 @@ public class PostgresqlDataTypeFactoryWithJsonb extends PostgresqlDataTypeFactor
                 return null;
             }
 
-            if (obj instanceof String str) {
-                return ComparableJsonNode.of(objectMapper.readTree(str));
+            if (obj instanceof String) {
+                return ComparableJsonNode.of(objectMapper.readTree((String) obj));
             }
 
             if (obj instanceof Map || obj instanceof List<?>) {
