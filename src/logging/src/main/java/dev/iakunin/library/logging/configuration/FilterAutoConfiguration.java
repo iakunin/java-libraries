@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.AnyRequestMatcher;
+import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -76,7 +77,8 @@ public class FilterAutoConfiguration {
 
     private RequestMatcher requestBlacklist() {
         if (properties.getExcludePaths().isEmpty()) {
-            return AnyRequestMatcher.INSTANCE;
+            // no requests will be matched
+            return new NegatedRequestMatcher(AnyRequestMatcher.INSTANCE);
         }
 
         return new OrRequestMatcher(
