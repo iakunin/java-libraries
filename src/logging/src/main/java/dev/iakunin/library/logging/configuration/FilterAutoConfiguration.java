@@ -22,7 +22,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
 @Configuration
 @EnableConfigurationProperties(Properties.class)
-public class FilterAutoConfiguration {
+publiccxxx class FilterAutoConfiguration {
 
     private final Properties properties;
     private final FieldTrimmer fieldTrimmer;
