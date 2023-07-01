@@ -1,0 +1,12 @@
+apply from: "$rootDir/gradle/publishing.gradle"
+apply plugin: "org.springframework.boot"
+
+bootJar.enabled = false
+jar.enabled = true
+archivesBaseName = "library-persistence"
+project.version = "0.0.5"
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    annotationProcessor "org.hibernate:hibernate-jpamodelgen:5.6.3.Final"
+}

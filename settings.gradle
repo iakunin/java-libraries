@@ -1,0 +1,5 @@
+include ":src:logging"
+include ":src:feign-tracing"
+include ":src:exception-handling"
+include ":src:tests"
+include ":src:persistence"

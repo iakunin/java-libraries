@@ -1,0 +1,35 @@
+apply plugin: "maven-publish"
+
+java {
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+
+        // https://stackoverflow.com/a/63835718/3456163
+        mavenJava(MavenPublication) {
+            from components.java
+
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+        }
+
+    }
+
+    repositories {
+        maven {
+            url "https://maven.pkg.github.com/iakunin/java-libraries"
+            credentials {
+                username "$releaseRepoUser"
+                password "$releaseRepoPassword"
+            }
+        }
+    }
+}

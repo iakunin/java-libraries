@@ -1,0 +1,23 @@
+apply from: "$rootDir/gradle/publishing.gradle"
+apply plugin: "org.springframework.boot"
+
+bootJar.enabled = false
+jar.enabled = true
+archivesBaseName = "library-feign-tracing"
+project.version = "0.0.5"
+
+def feignVersion="11.8"
+
+dependencies {
+
+    implementation project(":src:logging")
+
+    implementation "org.springframework.boot:spring-boot-starter-web"
+
+    api "org.springframework.cloud:spring-cloud-starter-openfeign:3.1.7"
+    api "io.github.openfeign:feign-core:${feignVersion}"
+    api "io.github.openfeign:feign-jackson:${feignVersion}"
+    api "io.github.openfeign:feign-micrometer:${feignVersion}"
+    api "io.micrometer:micrometer-registry-prometheus"
+
+}

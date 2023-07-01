@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    dev.iakunin.library.feigntracing.configuration.FeignComponentsConfiguration, \
+    dev.iakunin.library.feigntracing.configuration.FeignCapabilityConfiguration, \
+    dev.iakunin.library.feigntracing.configuration.FeignBuilderConfiguration

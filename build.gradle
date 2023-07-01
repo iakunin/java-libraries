@@ -1,0 +1,126 @@
+plugins {
+    id "org.springframework.boot" version "2.7.13" apply false
+    id "io.spring.dependency-management" version "1.1.0" apply false
+    id "com.diffplug.spotless" version "5.12.5" apply false
+    id "com.github.spotbugs" version "5.0.4" apply false
+}
+
+ext {
+    lombokVersion="1.18.28"
+}
+
+subprojects {
+    // More about applying plugins in subprojects read here:
+    // https://discuss.gradle.org/t/cannot-use-plugins-block-inside-subprojects-block/13570
+    apply plugin: "java"
+    apply plugin: "java-library"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "pmd"
+    apply plugin: "checkstyle"
+    apply plugin: "com.diffplug.spotless"
+    apply plugin: "com.github.spotbugs"
+    apply plugin: "jacoco"
+
+    group = "dev.iakunin.library"
+    sourceCompatibility = "17"
+
+    repositories {
+        mavenCentral()
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.required = false
+            html.required = true
+        }
+        finalizedBy jacocoTestCoverageVerification
+    }
+
+    jacocoTestCoverageVerification {
+        violationRules {
+            failOnViolation = false
+            rule {
+                enabled = true
+                limit {
+                    minimum = 0.8
+                }
+            }
+        }
+    }
+
+    // global dependencies (for all submodules)
+    dependencies {
+        // lombok
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+        testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    }
+
+    pmd {
+        toolVersion = "6.39.0"
+        consoleOutput = true
+        ignoreFailures = false
+        rulesMinimumPriority = 5
+        ruleSetFiles = files("${project.rootDir}/etc/quality/pmd.xml")
+        ruleSets = []
+    }
+
+    checkstyle {
+        configFile file("${project.rootDir}/etc/quality/checkstyle.xml")
+        toolVersion "8.37"
+        maxWarnings = 0
+    }
+
+    checkstyleMain {
+        source = "src/main/java"
+    }
+
+    checkstyleTest {
+        source = "src/test/java"
+    }
+
+    spotless {
+        format "misc", {
+            // define the files to apply `misc` to
+            target "*.gradle", "*.md", ".gitignore"
+
+            trimTrailingWhitespace()
+            indentWithSpaces(4)
+            endWithNewline()
+        }
+        java {
+            target fileTree(".") {
+                include "**/*.java"
+                exclude "**/build/**", "**/build-*/**"
+            }
+            eclipse().configFile("${project.rootDir}/etc/quality/code-formatter.xml")
+        }
+    }
+
+    spotbugs {
+        ignoreFailures = false
+        showStackTraces = true
+        showProgress = true
+        effort = "default"
+        reportLevel = "default"
+        visitors = ["FindSqlInjection", "SwitchFallthrough"]
+        omitVisitors = ["FindNonShortCircuit"]
+        reportsDir = file("$buildDir/spotbugs")
+        onlyAnalyze = ["dev.iakunin.library.*"]
+        maxHeapSize = "1g"
+        extraArgs = ["-nested:false"]
+    }
+
+    test {
+        useJUnitPlatform()
+        finalizedBy jacocoTestReport
+    }
+
+}
