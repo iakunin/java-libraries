@@ -4,7 +4,7 @@ apply plugin: "org.springframework.boot"
 bootJar.enabled = false
 jar.enabled = true
 archivesBaseName = "library-persistence"
-project.version = "0.0.5"
+project.version = "0.0.6"
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
