@@ -21,7 +21,8 @@ jobs:
           - pmdMain pmdTest
           - spotbugsMain spotbugsTest
           - spotlessJavaCheck spotlessMiscCheck
-          - clean build
+          - compileJava
+          - test
 
     steps:
       - name: Checkout source
@@ -40,18 +41,3 @@ jobs:
 
       - name: ${{ matrix.gradle-tasks }}
         run: gradle ${{ matrix.gradle-tasks }} --info
-
-#      - name: checkstyle
-#        run: gradle checkstyleMain checkstyleTest --info
-#
-#      - name: pmd
-#        run: gradle pmdMain pmdTest --info
-#
-#      - name: spotbugs
-#        run: gradle spotbugsMain spotbugsTest --info
-#
-#      - name: spotless
-#        run: gradle spotlessJavaCheck spotlessMiscCheck --info
-#
-#      - name: Build all modules
-#        run: gradle clean build --info
