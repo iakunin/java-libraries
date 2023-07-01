@@ -1,0 +1,43 @@
+name: ci
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  gradle:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        gradle-tasks:
+          - checkstyleMain checkstyleTest
+          - pmdMain pmdTest
+          - spotbugsMain spotbugsTest
+          - spotlessJavaCheck spotlessMiscCheck
+          - compileJava
+          - test
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: zulu
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: 7.6.1
+
+      - name: ${{ matrix.gradle-tasks }}
+        run: gradle ${{ matrix.gradle-tasks }}
