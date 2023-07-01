@@ -4,7 +4,7 @@ apply plugin: "org.springframework.boot"
 bootJar.enabled = false
 jar.enabled = true
 archivesBaseName = "library-logging"
-project.version = "0.0.8"
+project.version = "0.0.9"
 
 dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"

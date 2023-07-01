@@ -32,12 +32,13 @@ public final class HttpLoggingFilter extends OncePerRequestFilter {
         HttpServletResponse response,
         FilterChain filterChain
     ) throws ServletException, IOException {
-        if (requestBlacklist.matches(request)) {
-            filterChain.doFilter(request, response);
+        final var requestWrapper = wrapRequest(request);
+
+        if (requestBlacklist.matches(requestWrapper)) {
+            filterChain.doFilter(requestWrapper, response);
             return;
         }
 
-        final var requestWrapper = wrapRequest(request);
         final var responseWrapper = wrapResponse(response, requestWrapper);
 
         doFilterWrapped(requestWrapper, responseWrapper, filterChain);
