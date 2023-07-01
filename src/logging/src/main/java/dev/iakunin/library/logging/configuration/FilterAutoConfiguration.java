@@ -19,7 +19,7 @@ import org.springframework.security.web.util.matcher.AnyRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-@SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
+//@SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
 @Configuration
 @EnableConfigurationProperties(Properties.class)
 public class FilterAutoConfiguration {
