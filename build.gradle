@@ -28,6 +28,15 @@ subprojects {
         mavenCentral()
     }
 
+    // Adding javac linter to compileJava task.
+    // Taken from here https://stackoverflow.com/a/29593630/3456163
+    // and from here https://stackoverflow.com/a/69734707/3456163
+    tasks.withType(JavaCompile).configureEach {
+        configure(options) {
+            options.compilerArgs << "-Xlint:all,-serial,-processing" << "-Werror"
+        }
+    }
+
     configurations {
         compileOnly {
             extendsFrom annotationProcessor

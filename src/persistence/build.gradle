@@ -4,9 +4,24 @@ apply plugin: "org.springframework.boot"
 bootJar.enabled = false
 jar.enabled = true
 archivesBaseName = "library-persistence"
-project.version = "0.0.6"
+project.version = "0.0.7"
+
+def testcontainersVersion="1.18.3"
 
 dependencies {
+
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     annotationProcessor "org.hibernate:hibernate-jpamodelgen:5.6.3.Final"
+
+    // For converter.MonetaryAmount
+    implementation "org.javamoney:moneta:1.4.2"
+    implementation "org.jadira.usertype:usertype.core:6.0.1.GA"
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.15.2"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    testImplementation "org.postgresql:postgresql:42.6.0"
+    testImplementation "org.testcontainers:postgresql:${testcontainersVersion}"
+    testImplementation "org.testcontainers:junit-jupiter:${testcontainersVersion}"
+
 }

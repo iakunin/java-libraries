@@ -10,7 +10,7 @@ import javax.persistence.Converter;
  * Has been taken from here: https://stackoverflow.com/a/50448142/3456163
  */
 @Converter
-public class StringListConverter implements AttributeConverter<List<String>, String> {
+public final class ListOfStrings implements AttributeConverter<List<String>, String> {
     private static final String DELIMITER = ",";
 
     @Override
