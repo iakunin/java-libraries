@@ -13,17 +13,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Slf4j
 @Configuration
 @EnableFeignClients
 @RequiredArgsConstructor
+@Import(FeignClientsConfiguration.class)
 public class FeignBuilderConfiguration {
 
-    private final SessionFingerprintInterceptor interceptor;
+    private final SessionFingerprintInterceptor sessionFingerprintInterceptor;
     private final Encoder encoder;
     private final Decoder decoder;
     private final ErrorDecoder errorDecoder;
@@ -35,7 +38,7 @@ public class FeignBuilderConfiguration {
         final Feign.Builder builder = Feign.builder()
             .contract(new SpringMvcContract())
             .retryer(Retryer.NEVER_RETRY)
-            .requestInterceptor(interceptor)
+            .requestInterceptor(sessionFingerprintInterceptor)
             .encoder(encoder)
             .decoder(decoder)
             .errorDecoder(errorDecoder)
