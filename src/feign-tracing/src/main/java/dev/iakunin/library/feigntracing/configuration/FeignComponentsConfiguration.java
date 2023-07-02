@@ -6,6 +6,9 @@ import dev.iakunin.library.feigntracing.FeignLogger;
 import dev.iakunin.library.feigntracing.SessionFingerprintInterceptor;
 import dev.iakunin.library.logging.configuration.Properties;
 import dev.iakunin.library.logging.service.MdcFingerprintService;
+import feign.Logger;
+import feign.codec.Decoder;
+import feign.codec.Encoder;
 import feign.codec.ErrorDecoder;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
@@ -17,15 +20,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FeignComponentsConfiguration {
 
-    @ConditionalOnMissingBean
     @Bean
-    public FeignLogger feignLogger() {
+    @ConditionalOnMissingBean
+    public Logger feignLogger() {
         return new FeignLogger();
     }
 
-    @ConditionalOnMissingBean
     @Bean
-    public JacksonEncoder feignJacksonEncoder() {
+    @ConditionalOnMissingBean
+    public Encoder feignJacksonEncoder() {
         return new JacksonEncoder(
             List.of(
                 new JavaTimeModule()
@@ -33,9 +36,9 @@ public class FeignComponentsConfiguration {
         );
     }
 
-    @ConditionalOnMissingBean
     @Bean
-    public JacksonDecoder feignJacksonDecoder() {
+    @ConditionalOnMissingBean
+    public Decoder feignJacksonDecoder() {
         return new JacksonDecoder(
             List.of(
                 new JavaTimeModule()
@@ -43,22 +46,20 @@ public class FeignComponentsConfiguration {
         );
     }
 
-    @ConditionalOnMissingBean
     @Bean
+    @ConditionalOnMissingBean
     public ErrorDecoder commonErrorDecoder() {
         return new CommonErrorDecoder(
             new ErrorDecoder.Default()
         );
     }
 
-    @ConditionalOnMissingBean
     @Bean
+    @ConditionalOnMissingBean
     public SessionFingerprintInterceptor sessionFingerprintHeaderInterceptor(
         Properties properties,
         MdcFingerprintService mdcFingerprintService
     ) {
-        return new SessionFingerprintInterceptor(
-            properties, mdcFingerprintService
-        );
+        return new SessionFingerprintInterceptor(properties, mdcFingerprintService);
     }
 }
