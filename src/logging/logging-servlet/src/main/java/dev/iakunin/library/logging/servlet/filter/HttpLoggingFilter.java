@@ -92,7 +92,7 @@ public final class HttpLoggingFilter extends OncePerRequestFilter {
             final MediaType mediaType = MediaType.parseMediaType(request.getContentType());
             return contentTypeWhitelist.contains(mediaType);
         } catch (IllegalArgumentException ex) {
-            log.warn("Unable to parse MediaType from '{}'", request.getContentType());
+            log.debug("Unable to parse MediaType from '{}'", request.getContentType());
             return false;
         }
     }
