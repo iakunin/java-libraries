@@ -1,7 +1,7 @@
 package dev.iakunin.library.exceptionhandling;
 
+import dev.iakunin.library.logging.common.configuration.ServicesConfiguration;
 import dev.iakunin.library.logging.common.service.MdcFingerprintService;
-import java.util.ServiceConfigurationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +15,7 @@ import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
 
 @ControllerAdvice
 @RequiredArgsConstructor
-@Import(ServiceConfigurationError.class)
+@Import(ServicesConfiguration.class)
 public class ExceptionHandler implements ProblemHandling, SecurityAdviceTrait {
 
     private final MdcFingerprintService mdcFingerprintService;
