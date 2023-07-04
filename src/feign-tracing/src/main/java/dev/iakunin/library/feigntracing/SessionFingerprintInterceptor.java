@@ -1,7 +1,7 @@
 package dev.iakunin.library.feigntracing;
 
-import dev.iakunin.library.logging.servlet.configuration.Properties;
-import dev.iakunin.library.logging.servlet.service.MdcFingerprintService;
+import dev.iakunin.library.logging.common.configuration.Properties;
+import dev.iakunin.library.logging.common.service.MdcFingerprintService;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.springframework.util.StringUtils;

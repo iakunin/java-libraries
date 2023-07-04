@@ -1,8 +1,8 @@
 package dev.iakunin.library.logging.servlet.filter;
 
-import dev.iakunin.library.logging.servlet.logger.RequestLogger;
-import dev.iakunin.library.logging.servlet.logger.ResponseLogger;
-import dev.iakunin.library.logging.servlet.service.ContentTypeWhitelist;
+import dev.iakunin.library.logging.common.service.ContentTypeWhitelist;
+import dev.iakunin.library.logging.servlet.adapter.RequestLoggerAdapter;
+import dev.iakunin.library.logging.servlet.adapter.ResponseLoggerAdapter;
 import dev.iakunin.library.logging.servlet.wrapper.ContentCachingRequestWrapper;
 import dev.iakunin.library.logging.servlet.wrapper.StreamingAwareContentCachingResponseWrapper;
 import java.io.IOException;
@@ -12,16 +12,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.StopWatch;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
+@Slf4j
 @RequiredArgsConstructor
 public final class HttpLoggingFilter extends OncePerRequestFilter {
 
-    private final RequestLogger requestLogger;
-    private final ResponseLogger responseLogger;
+    private final RequestLoggerAdapter requestLogger;
+    private final ResponseLoggerAdapter responseLogger;
     private final RequestMatcher requestBlacklist;
     private final ContentTypeWhitelist contentTypeWhitelist;
 
@@ -85,7 +88,13 @@ public final class HttpLoggingFilter extends OncePerRequestFilter {
             return false;
         }
 
-        return contentTypeWhitelist.isContentTypeInWhitelist(request);
+        try {
+            final MediaType mediaType = MediaType.parseMediaType(request.getContentType());
+            return contentTypeWhitelist.contains(mediaType);
+        } catch (IllegalArgumentException ex) {
+            log.warn("Unable to parse MediaType from '{}'", request.getContentType());
+            return false;
+        }
     }
 
 }

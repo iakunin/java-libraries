@@ -1,6 +1,6 @@
-package dev.iakunin.library.logging.servlet.service;
+package dev.iakunin.library.logging.common.service;
 
-import dev.iakunin.library.logging.servlet.configuration.Properties;
+import dev.iakunin.library.logging.common.configuration.Properties;
 import org.slf4j.MDC;
 
 public final class MdcFingerprintService {

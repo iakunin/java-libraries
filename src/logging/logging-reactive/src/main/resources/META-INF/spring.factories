@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    dev.iakunin.library.logging.reactive.configuration.HandlersConfiguration

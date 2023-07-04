@@ -1,7 +1,7 @@
 package dev.iakunin.library.logging.servlet.filter;
 
-import dev.iakunin.library.logging.servlet.configuration.Properties;
-import dev.iakunin.library.logging.servlet.service.FieldTrimmer;
+import dev.iakunin.library.logging.common.configuration.Properties;
+import dev.iakunin.library.logging.common.service.FieldTrimmer;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

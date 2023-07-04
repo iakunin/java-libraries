@@ -1,4 +1,4 @@
-package dev.iakunin.library.logging.servlet.configuration;
+package dev.iakunin.library.logging.common.configuration;
 
 import java.util.List;
 import lombok.Data;
@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 public final class Properties {
 
     private String sessionFingerprintHeader = "x-session-fingerprint";
+    private String requestIdHeader = "x-server-request-id";
     private MdcKeys mdcKeys = new MdcKeys();
     private Integer fieldMaxLength = 20000;
     private boolean logQueryString = false;
@@ -54,6 +55,7 @@ public final class Properties {
             private String body = "request_body";
             private String headers = "request_headers";
             private String clientIp = "client_ip";
+            private String id = "request_id";
         }
 
         @Data

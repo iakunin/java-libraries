@@ -26,6 +26,7 @@ subprojects {
 
     repositories {
         mavenCentral()
+        mavenLocal()
     }
 
     // Adding javac linter to compileJava task.

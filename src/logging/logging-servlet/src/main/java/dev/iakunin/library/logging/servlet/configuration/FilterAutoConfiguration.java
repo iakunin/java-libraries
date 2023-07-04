@@ -1,15 +1,16 @@
 package dev.iakunin.library.logging.servlet.configuration;
 
+import dev.iakunin.library.logging.common.configuration.Properties;
+import dev.iakunin.library.logging.common.service.ContentTypeWhitelist;
+import dev.iakunin.library.logging.common.service.FieldTrimmer;
+import dev.iakunin.library.logging.common.service.MdcFingerprintService;
+import dev.iakunin.library.logging.servlet.adapter.RequestLoggerAdapter;
+import dev.iakunin.library.logging.servlet.adapter.ResponseLoggerAdapter;
 import dev.iakunin.library.logging.servlet.filter.FingerprintFilter;
 import dev.iakunin.library.logging.servlet.filter.HttpLoggingFilter;
 import dev.iakunin.library.logging.servlet.filter.RequestPathFilter;
-import dev.iakunin.library.logging.servlet.logger.RequestLogger;
-import dev.iakunin.library.logging.servlet.logger.ResponseLogger;
-import dev.iakunin.library.logging.servlet.service.ContentTypeWhitelist;
-import dev.iakunin.library.logging.servlet.service.FieldTrimmer;
-import dev.iakunin.library.logging.servlet.service.HeadersBuilder;
-import dev.iakunin.library.logging.servlet.service.MdcFingerprintService;
 import java.util.stream.Collectors;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -23,25 +24,24 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
 @Configuration
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @EnableConfigurationProperties(Properties.class)
 public class FilterAutoConfiguration {
 
     private final Properties properties;
     private final FieldTrimmer fieldTrimmer;
     private final ContentTypeWhitelist contentTypeWhitelist;
-    private final HeadersBuilder headersBuilder;
+    private final MdcFingerprintService mdcFingerprintService;
 
     public FilterAutoConfiguration(Properties properties) {
         this.properties = properties;
         this.fieldTrimmer = new FieldTrimmer(properties);
         this.contentTypeWhitelist = new ContentTypeWhitelist(properties);
-        this.headersBuilder = new HeadersBuilder();
+        this.mdcFingerprintService = new MdcFingerprintService(properties);
     }
 
     @Bean
-    public FilterRegistrationBean<FingerprintFilter> fingerprintRegistrationBean(
-        MdcFingerprintService mdcFingerprintService
-    ) {
+    public FilterRegistrationBean<FingerprintFilter> fingerprintRegistrationBean() {
         final FilterRegistrationBean<FingerprintFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(
             new FingerprintFilter(mdcFingerprintService, properties)
@@ -67,8 +67,8 @@ public class FilterAutoConfiguration {
         final FilterRegistrationBean<HttpLoggingFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(
             new HttpLoggingFilter(
-                new RequestLogger(properties, fieldTrimmer, contentTypeWhitelist, headersBuilder),
-                new ResponseLogger(properties, fieldTrimmer, headersBuilder),
+                new RequestLoggerAdapter(properties),
+                new ResponseLoggerAdapter(properties),
                 requestBlacklist(),
                 contentTypeWhitelist
             )

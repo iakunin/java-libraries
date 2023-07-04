@@ -1,3 +1,5 @@
+include ":src:logging:logging-common"
+include ":src:logging:logging-reactive"
 include ":src:logging:logging-servlet"
 include ":src:feign-tracing"
 include ":src:exception-handling"

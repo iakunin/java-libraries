@@ -5,15 +5,12 @@ jar.enabled = true
 
 archivesBaseName = 'library-' + name
 
-project.version = '0.0.17'
+project.version = '0.0.2'
 
 apply from: "$rootDir/gradle/publishing.gradle"
 
 dependencies {
-    api "dev.iakunin.library:logging-common:0.0.2"
-
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-    implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation "org.springframework.security:spring-security-web"
-    implementation "commons-io:commons-io:2.11.0"
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework:spring-web"
 }

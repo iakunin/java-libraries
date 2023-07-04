@@ -4,13 +4,13 @@ apply plugin: "org.springframework.boot"
 bootJar.enabled = false
 jar.enabled = true
 archivesBaseName = "library-feign-tracing"
-project.version = "0.0.16"
+project.version = "0.0.17"
 
 def feignVersion="11.8"
 
 dependencies {
 
-    implementation project(":src:logging:logging-servlet")
+    api "dev.iakunin.library:logging-common:0.0.2"
 
     implementation "org.springframework.boot:spring-boot-starter-web"
 

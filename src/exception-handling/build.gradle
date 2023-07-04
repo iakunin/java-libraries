@@ -4,11 +4,11 @@ apply plugin: "org.springframework.boot"
 bootJar.enabled = false
 jar.enabled = true
 archivesBaseName = "library-exception-handling"
-project.version = "0.0.11"
+project.version = "0.0.12"
 
 dependencies {
 
-    implementation project(":src:logging:logging-servlet")
+    api "dev.iakunin.library:logging-common:0.0.2"
 
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "com.google.guava:guava:31.1-jre"
