@@ -1,4 +1,4 @@
-package dev.iakunin.library.logging.filter;
+package dev.iakunin.library.logging.wrapper;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.commons.io.IOUtils;
 
-public final class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
+public final class ContentCachingRequestWrapper extends HttpServletRequestWrapper {
 
     private ByteArrayOutputStream cachedBytes;
 
-    public MultiReadHttpServletRequest(HttpServletRequest request) {
+    public ContentCachingRequestWrapper(HttpServletRequest request) {
         super(request);
     }
 
@@ -47,7 +47,7 @@ public final class MultiReadHttpServletRequest extends HttpServletRequestWrapper
         public CachedServletInputStream() {
             super();
             this.input = new ByteArrayInputStream(
-                MultiReadHttpServletRequest.this.cachedBytes.toByteArray()
+                ContentCachingRequestWrapper.this.cachedBytes.toByteArray()
             );
         }
 
