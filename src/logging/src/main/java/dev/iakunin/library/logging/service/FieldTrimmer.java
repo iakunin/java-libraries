@@ -11,9 +11,12 @@ public final class FieldTrimmer {
     }
 
     public String trim(String source) {
-        return source.substring(
-            0,
-            Math.min(source.length(), maxLength)
-        );
+        final boolean shouldBeTrimmed = source.length() > maxLength;
+
+        if (shouldBeTrimmed) {
+            return source.substring(0, maxLength) + "<TRIMMED>";
+        }
+
+        return source;
     }
 }
