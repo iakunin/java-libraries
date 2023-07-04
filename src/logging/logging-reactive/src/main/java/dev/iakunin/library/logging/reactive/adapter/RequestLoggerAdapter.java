@@ -1,10 +1,10 @@
 package dev.iakunin.library.logging.reactive.adapter;
 
-import dev.iakunin.library.logging.common.configuration.Properties;
 import dev.iakunin.library.logging.common.logger.RequestLogger;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -12,13 +12,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public final class RequestLoggerAdapter {
 
     private final RequestLogger requestLogger;
-
-    public RequestLoggerAdapter(Properties properties) {
-        this.requestLogger = new RequestLogger(properties);
-    }
 
     public void log(ServerHttpRequest request, String body) {
         requestLogger.log(

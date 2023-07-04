@@ -1,6 +1,5 @@
 package dev.iakunin.library.logging.servlet.adapter;
 
-import dev.iakunin.library.logging.common.configuration.Properties;
 import dev.iakunin.library.logging.common.logger.ResponseLogger;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -10,19 +9,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 import org.springframework.web.util.WebUtils;
 
 @Slf4j
+@RequiredArgsConstructor
 public final class ResponseLoggerAdapter {
 
     private final ResponseLogger responseLogger;
-
-    public ResponseLoggerAdapter(Properties properties) {
-        this.responseLogger = new ResponseLogger(properties);
-    }
 
     public void log(HttpServletResponse response, Duration duration) throws IOException {
         responseLogger.log(

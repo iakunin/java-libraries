@@ -1,6 +1,5 @@
 package dev.iakunin.library.logging.servlet.adapter;
 
-import dev.iakunin.library.logging.common.configuration.Properties;
 import dev.iakunin.library.logging.common.logger.RequestLogger;
 import java.io.IOException;
 import java.util.Arrays;
@@ -9,18 +8,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 
 @Slf4j
+@RequiredArgsConstructor
 public final class RequestLoggerAdapter {
 
     private final RequestLogger requestLogger;
-
-    public RequestLoggerAdapter(Properties properties) {
-        this.requestLogger = new RequestLogger(properties);
-    }
 
     public void log(HttpServletRequest request) throws IOException {
         requestLogger.log(

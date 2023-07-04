@@ -10,11 +10,13 @@ import dev.iakunin.library.logging.servlet.filter.FingerprintFilter;
 import dev.iakunin.library.logging.servlet.filter.HttpLoggingFilter;
 import dev.iakunin.library.logging.servlet.filter.RequestPathFilter;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.AnyRequestMatcher;
@@ -26,19 +28,16 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @EnableConfigurationProperties(Properties.class)
+@RequiredArgsConstructor
+@Import(AdaptersConfiguration.class)
 public class FilterAutoConfiguration {
 
     private final Properties properties;
     private final FieldTrimmer fieldTrimmer;
     private final ContentTypeWhitelist contentTypeWhitelist;
     private final MdcFingerprintService mdcFingerprintService;
-
-    public FilterAutoConfiguration(Properties properties) {
-        this.properties = properties;
-        this.fieldTrimmer = new FieldTrimmer(properties);
-        this.contentTypeWhitelist = new ContentTypeWhitelist(properties);
-        this.mdcFingerprintService = new MdcFingerprintService(properties);
-    }
+    private final RequestLoggerAdapter requestLoggerAdapter;
+    private final ResponseLoggerAdapter responseLoggerAdapter;
 
     @Bean
     public FilterRegistrationBean<FingerprintFilter> fingerprintRegistrationBean() {
@@ -67,8 +66,8 @@ public class FilterAutoConfiguration {
         final FilterRegistrationBean<HttpLoggingFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(
             new HttpLoggingFilter(
-                new RequestLoggerAdapter(properties),
-                new ResponseLoggerAdapter(properties),
+                requestLoggerAdapter,
+                responseLoggerAdapter,
                 requestBlacklist(),
                 contentTypeWhitelist
             )

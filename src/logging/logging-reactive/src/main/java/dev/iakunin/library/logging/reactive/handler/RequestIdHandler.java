@@ -1,8 +1,8 @@
 package dev.iakunin.library.logging.reactive.handler;
 
 import dev.iakunin.library.logging.common.configuration.Properties;
+import dev.iakunin.library.logging.reactive.wrapper.ContextWrapper;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
 import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -12,27 +12,32 @@ import reactor.core.publisher.Mono;
 public final class RequestIdHandler implements HttpHandler {
 
     private final HttpHandler decorated;
-    private final Properties.MdcKeys.Request requestMdcKeys;
     private final String requestIdHeaderName;
+    private final ContextWrapper contextWrapper;
 
-    public RequestIdHandler(HttpHandler decorated, Properties properties) {
+    public RequestIdHandler(
+        HttpHandler decorated,
+        Properties properties,
+        ContextWrapper contextWrapper
+    ) {
         super();
         this.decorated = decorated;
-        this.requestMdcKeys = properties.getMdcKeys().getRequest();
         this.requestIdHeaderName = properties.getRequestIdHeader();
+        this.contextWrapper = contextWrapper;
     }
 
     @Override
     public Mono<Void> handle(ServerHttpRequest request, ServerHttpResponse response) {
-        MDC.put(requestMdcKeys.getId(), request.getId());
-
-        response.getHeaders().set(requestIdHeaderName, request.getId());
-
         return decorated.handle(request, response)
-            .then(Mono.defer(() -> {
-                MDC.remove(requestMdcKeys.getId());
-                return Mono.empty();
-            }));
+            .contextWrite(context -> {
+                final String requestId = request.getId();
+
+                response.getHeaders().set(requestIdHeaderName, requestId);
+
+                return context.putAll(
+                    contextWrapper.putRequestId(context, requestId).readOnly()
+                );
+            });
     }
 
 }

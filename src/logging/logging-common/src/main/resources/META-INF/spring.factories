@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    dev.iakunin.library.logging.common.configuration.ServicesConfiguration, \
+    dev.iakunin.library.logging.common.configuration.LoggerConfiguration
