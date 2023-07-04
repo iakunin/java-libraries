@@ -12,6 +12,7 @@ import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.http.MediaType;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -61,7 +62,7 @@ public final class RequestLogger {
         String method;
         @NonNull
         Map<String, List<String>> headers;
-        @NonNull
+        @Nullable
         MediaType contentType;
         @NonNull
         String clientIp;
