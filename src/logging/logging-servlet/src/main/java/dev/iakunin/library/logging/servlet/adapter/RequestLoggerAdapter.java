@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 
 @Slf4j
 public final class RequestLoggerAdapter {
@@ -62,7 +63,11 @@ public final class RequestLoggerAdapter {
     }
 
     private static MediaType buildContentType(HttpServletRequest request) {
-        return MediaType.parseMediaType(request.getContentType());
+        if (StringUtils.hasLength(request.getContentType())) {
+            return MediaType.parseMediaType(request.getContentType());
+        }
+
+        return null;
     }
 
     private String buildBody(HttpServletRequest request) throws IOException {
