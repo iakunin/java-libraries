@@ -7,6 +7,7 @@ import dev.iakunin.library.logging.logger.RequestLogger;
 import dev.iakunin.library.logging.logger.ResponseLogger;
 import dev.iakunin.library.logging.service.ContentTypeWhitelist;
 import dev.iakunin.library.logging.service.FieldTrimmer;
+import dev.iakunin.library.logging.service.HeadersBuilder;
 import dev.iakunin.library.logging.service.MdcFingerprintService;
 import java.util.stream.Collectors;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -28,11 +29,13 @@ public class FilterAutoConfiguration {
     private final Properties properties;
     private final FieldTrimmer fieldTrimmer;
     private final ContentTypeWhitelist contentTypeWhitelist;
+    private final HeadersBuilder headersBuilder;
 
     public FilterAutoConfiguration(Properties properties) {
         this.properties = properties;
         this.fieldTrimmer = new FieldTrimmer(properties);
         this.contentTypeWhitelist = new ContentTypeWhitelist(properties);
+        this.headersBuilder = new HeadersBuilder();
     }
 
     @Bean
@@ -64,8 +67,8 @@ public class FilterAutoConfiguration {
         final FilterRegistrationBean<HttpLoggingFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(
             new HttpLoggingFilter(
-                new RequestLogger(properties, fieldTrimmer, contentTypeWhitelist),
-                new ResponseLogger(properties, fieldTrimmer),
+                new RequestLogger(properties, fieldTrimmer, contentTypeWhitelist, headersBuilder),
+                new ResponseLogger(properties, fieldTrimmer, headersBuilder),
                 requestBlacklist(),
                 contentTypeWhitelist
             )

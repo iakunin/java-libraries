@@ -2,10 +2,10 @@ package dev.iakunin.library.logging.logger;
 
 import dev.iakunin.library.logging.configuration.Properties;
 import dev.iakunin.library.logging.service.FieldTrimmer;
+import dev.iakunin.library.logging.service.HeadersBuilder;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.time.Duration;
-import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
@@ -18,10 +18,16 @@ public final class ResponseLogger {
 
     private final Properties.MdcKeys.Response responseMdcKeys;
     private final FieldTrimmer fieldTrimmer;
+    private final HeadersBuilder headersBuilder;
 
-    public ResponseLogger(Properties properties, FieldTrimmer fieldTrimmer) {
+    public ResponseLogger(
+        Properties properties,
+        FieldTrimmer fieldTrimmer,
+        HeadersBuilder headersBuilder
+    ) {
         this.responseMdcKeys = properties.getMdcKeys().getResponse();
         this.fieldTrimmer = fieldTrimmer;
+        this.headersBuilder = headersBuilder;
     }
 
     public void log(HttpServletResponse response, Duration responseDuration) throws IOException {
@@ -31,7 +37,10 @@ public final class ResponseLogger {
                 responseMdcKeys.getStatusPhrase(),
                 HttpStatus.valueOf(response.getStatus()).getReasonPhrase()
             );
-            MDC.put(responseMdcKeys.getHeaders(), fieldTrimmer.trim(buildHeaders(response)));
+            MDC.put(
+                responseMdcKeys.getHeaders(),
+                fieldTrimmer.trim(headersBuilder.build(response))
+            );
             MDC.put(responseMdcKeys.getBody(), fieldTrimmer.trim(buildBody(response)));
             MDC.put(responseMdcKeys.getDurationMs(), String.valueOf(responseDuration.toMillis()));
 
@@ -43,16 +52,6 @@ public final class ResponseLogger {
             MDC.remove(responseMdcKeys.getBody());
             MDC.remove(responseMdcKeys.getDurationMs());
         }
-    }
-
-    private String buildHeaders(HttpServletResponse response) {
-        return response.getHeaderNames().stream().distinct().flatMap(
-            headerName -> response.getHeaders(headerName).stream().map(
-                headerValue -> String.format("%s: \"%s\"", headerName, headerValue)
-            )
-        ).collect(
-            Collectors.joining(System.lineSeparator())
-        );
     }
 
     private String buildBody(HttpServletResponse response) throws IOException {

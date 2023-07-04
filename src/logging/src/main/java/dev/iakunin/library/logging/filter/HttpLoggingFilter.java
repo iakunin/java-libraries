@@ -3,13 +3,12 @@ package dev.iakunin.library.logging.filter;
 import dev.iakunin.library.logging.logger.RequestLogger;
 import dev.iakunin.library.logging.logger.ResponseLogger;
 import dev.iakunin.library.logging.service.ContentTypeWhitelist;
+import dev.iakunin.library.logging.wrapper.ContentCachingRequestWrapper;
+import dev.iakunin.library.logging.wrapper.StreamingAwareContentCachingResponseWrapper;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.Duration;
-import javax.servlet.DispatcherType;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +63,7 @@ public final class HttpLoggingFilter extends OncePerRequestFilter {
 
     private HttpServletRequest wrapRequest(HttpServletRequest request) {
         if (shouldBeWrapped(request)) {
-            return new MultiReadHttpServletRequest(request);
+            return new ContentCachingRequestWrapper(request);
         }
 
         return request;
@@ -77,43 +76,16 @@ public final class HttpLoggingFilter extends OncePerRequestFilter {
         if (isAsyncDispatch(request) || response instanceof ContentCachingResponseWrapper) {
             return (ContentCachingResponseWrapper) response;
         } else {
-            return new HttpStreamingAwareContentCachingResponseWrapper(response, request);
+            return new StreamingAwareContentCachingResponseWrapper(response, request);
         }
     }
 
     private boolean shouldBeWrapped(HttpServletRequest request) {
-        if (request instanceof MultiReadHttpServletRequest) {
+        if (request instanceof ContentCachingRequestWrapper) {
             return false;
         }
 
         return contentTypeWhitelist.isContentTypeInWhitelist(request);
     }
 
-    private static class HttpStreamingAwareContentCachingResponseWrapper
-        extends ContentCachingResponseWrapper {
-
-        private final HttpServletRequest request;
-
-        HttpStreamingAwareContentCachingResponseWrapper(
-            HttpServletResponse response,
-            HttpServletRequest request
-        ) {
-            super(response);
-            this.request = request;
-        }
-
-        @Override
-        public ServletOutputStream getOutputStream() throws IOException {
-            return useRawResponse() ? getResponse().getOutputStream() : super.getOutputStream();
-        }
-
-        @Override
-        public PrintWriter getWriter() throws IOException {
-            return useRawResponse() ? getResponse().getWriter() : super.getWriter();
-        }
-
-        private boolean useRawResponse() {
-            return request.getDispatcherType().equals(DispatcherType.ASYNC);
-        }
-    }
 }
