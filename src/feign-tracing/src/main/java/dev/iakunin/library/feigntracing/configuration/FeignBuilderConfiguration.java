@@ -32,7 +32,6 @@ public class FeignBuilderConfiguration {
     private final ErrorDecoder errorDecoder;
     private final Logger logger;
 
-    @Autowired(required = false)
     @Bean("commonFeignBuilder")
     public Feign.Builder feignBuilder(List<Capability> capabilities) {
         final Feign.Builder builder = Feign.builder()

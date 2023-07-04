@@ -4,7 +4,7 @@ apply plugin: "org.springframework.boot"
 bootJar.enabled = false
 jar.enabled = true
 archivesBaseName = "library-feign-tracing"
-project.version = "0.0.13"
+project.version = "0.0.15"
 
 def feignVersion="11.8"
 
