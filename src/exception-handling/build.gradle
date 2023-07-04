@@ -8,7 +8,7 @@ project.version = "0.0.12"
 
 dependencies {
 
-    api "dev.iakunin.library:logging-common:0.0.2"
+    api project(":src:logging:logging-common")
 
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "com.google.guava:guava:31.1-jre"

@@ -10,7 +10,7 @@ def feignVersion="11.8"
 
 dependencies {
 
-    api "dev.iakunin.library:logging-common:0.0.2"
+    api project(":src:logging:logging-common")
 
     implementation "org.springframework.boot:spring-boot-starter-web"
 

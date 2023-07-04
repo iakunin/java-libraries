@@ -10,7 +10,7 @@ project.version = '0.0.15'
 apply from: "$rootDir/gradle/publishing.gradle"
 
 dependencies {
-    api "dev.iakunin.library:logging-common:0.0.2"
+    api project(":src:logging:logging-common")
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation "org.springframework.boot:spring-boot-starter-webflux"
