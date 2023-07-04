@@ -1,4 +1,4 @@
-package dev.iakunin.library.logging.service;
+package dev.iakunin.library.logging.servlet.service;
 
 import java.util.ArrayList;
 import java.util.Collections;

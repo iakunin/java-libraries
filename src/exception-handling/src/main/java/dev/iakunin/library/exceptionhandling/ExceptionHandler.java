@@ -1,6 +1,6 @@
 package dev.iakunin.library.exceptionhandling;
 
-import dev.iakunin.library.logging.service.MdcFingerprintService;
+import dev.iakunin.library.logging.servlet.service.MdcFingerprintService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;

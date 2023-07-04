@@ -1,9 +1,9 @@
-package dev.iakunin.library.logging.logger;
+package dev.iakunin.library.logging.servlet.logger;
 
-import dev.iakunin.library.logging.configuration.Properties;
-import dev.iakunin.library.logging.service.ContentTypeWhitelist;
-import dev.iakunin.library.logging.service.FieldTrimmer;
-import dev.iakunin.library.logging.service.HeadersBuilder;
+import dev.iakunin.library.logging.servlet.configuration.Properties;
+import dev.iakunin.library.logging.servlet.service.ContentTypeWhitelist;
+import dev.iakunin.library.logging.servlet.service.FieldTrimmer;
+import dev.iakunin.library.logging.servlet.service.HeadersBuilder;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.Collectors;

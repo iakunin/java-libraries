@@ -1,8 +1,8 @@
-package dev.iakunin.library.logging.logger;
+package dev.iakunin.library.logging.servlet.logger;
 
-import dev.iakunin.library.logging.configuration.Properties;
-import dev.iakunin.library.logging.service.FieldTrimmer;
-import dev.iakunin.library.logging.service.HeadersBuilder;
+import dev.iakunin.library.logging.servlet.configuration.Properties;
+import dev.iakunin.library.logging.servlet.service.FieldTrimmer;
+import dev.iakunin.library.logging.servlet.service.HeadersBuilder;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.time.Duration;

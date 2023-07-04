@@ -1,4 +1,4 @@
-package dev.iakunin.library.logging.wrapper;
+package dev.iakunin.library.logging.servlet.wrapper;
 
 import java.io.IOException;
 import java.io.PrintWriter;

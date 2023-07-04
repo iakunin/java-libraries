@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    dev.iakunin.library.logging.servlet.configuration.FilterAutoConfiguration,\
+    dev.iakunin.library.logging.servlet.service.MdcFingerprintService

@@ -1,6 +1,6 @@
-package dev.iakunin.library.logging.service;
+package dev.iakunin.library.logging.servlet.service;
 
-import dev.iakunin.library.logging.configuration.Properties;
+import dev.iakunin.library.logging.servlet.configuration.Properties;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.MediaType;

@@ -1,14 +1,14 @@
-package dev.iakunin.library.logging.configuration;
+package dev.iakunin.library.logging.servlet.configuration;
 
-import dev.iakunin.library.logging.filter.FingerprintFilter;
-import dev.iakunin.library.logging.filter.HttpLoggingFilter;
-import dev.iakunin.library.logging.filter.RequestPathFilter;
-import dev.iakunin.library.logging.logger.RequestLogger;
-import dev.iakunin.library.logging.logger.ResponseLogger;
-import dev.iakunin.library.logging.service.ContentTypeWhitelist;
-import dev.iakunin.library.logging.service.FieldTrimmer;
-import dev.iakunin.library.logging.service.HeadersBuilder;
-import dev.iakunin.library.logging.service.MdcFingerprintService;
+import dev.iakunin.library.logging.servlet.filter.FingerprintFilter;
+import dev.iakunin.library.logging.servlet.filter.HttpLoggingFilter;
+import dev.iakunin.library.logging.servlet.filter.RequestPathFilter;
+import dev.iakunin.library.logging.servlet.logger.RequestLogger;
+import dev.iakunin.library.logging.servlet.logger.ResponseLogger;
+import dev.iakunin.library.logging.servlet.service.ContentTypeWhitelist;
+import dev.iakunin.library.logging.servlet.service.FieldTrimmer;
+import dev.iakunin.library.logging.servlet.service.HeadersBuilder;
+import dev.iakunin.library.logging.servlet.service.MdcFingerprintService;
 import java.util.stream.Collectors;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

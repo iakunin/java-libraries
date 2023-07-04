@@ -1,4 +1,4 @@
-package dev.iakunin.library.logging.configuration;
+package dev.iakunin.library.logging.servlet.configuration;
 
 import java.util.List;
 import lombok.Data;

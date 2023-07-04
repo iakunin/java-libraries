@@ -1,10 +1,10 @@
-package dev.iakunin.library.logging.filter;
+package dev.iakunin.library.logging.servlet.filter;
 
-import dev.iakunin.library.logging.logger.RequestLogger;
-import dev.iakunin.library.logging.logger.ResponseLogger;
-import dev.iakunin.library.logging.service.ContentTypeWhitelist;
-import dev.iakunin.library.logging.wrapper.ContentCachingRequestWrapper;
-import dev.iakunin.library.logging.wrapper.StreamingAwareContentCachingResponseWrapper;
+import dev.iakunin.library.logging.servlet.logger.RequestLogger;
+import dev.iakunin.library.logging.servlet.logger.ResponseLogger;
+import dev.iakunin.library.logging.servlet.service.ContentTypeWhitelist;
+import dev.iakunin.library.logging.servlet.wrapper.ContentCachingRequestWrapper;
+import dev.iakunin.library.logging.servlet.wrapper.StreamingAwareContentCachingResponseWrapper;
 import java.io.IOException;
 import java.time.Duration;
 import javax.servlet.FilterChain;

@@ -1,11 +1,11 @@
 .PHONY: .gradle .idea build etc gradle src
 
-# :src:logging
+# :src:logging:logging-servlet
 logging-publishToLocal:
-	bash etc/bin/gradle_in_docker.sh :src:logging:clean :src:logging:publishToMavenLocal
+	bash etc/bin/gradle_in_docker.sh :src:logging:logging-servlet:clean :src:logging:logging-servlet:publishToMavenLocal
 
 logging-publishToRemote:
-	bash etc/bin/gradle_in_docker.sh :src:logging:clean :src:logging:publish
+	bash etc/bin/gradle_in_docker.sh :src:logging:logging-servlet:clean :src:logging:logging-servlet:publish
 
 
 # :src:feign-tracing

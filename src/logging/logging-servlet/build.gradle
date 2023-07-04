@@ -1,10 +1,13 @@
-apply from: "$rootDir/gradle/publishing.gradle"
 apply plugin: "org.springframework.boot"
 
 bootJar.enabled = false
 jar.enabled = true
-archivesBaseName = "library-logging"
-project.version = "0.0.12"
+
+archivesBaseName = 'library-' + name
+
+project.version = '0.0.13'
+
+apply from: "$rootDir/gradle/publishing.gradle"
 
 dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"

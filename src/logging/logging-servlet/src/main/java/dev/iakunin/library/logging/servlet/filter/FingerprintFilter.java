@@ -1,7 +1,7 @@
-package dev.iakunin.library.logging.filter;
+package dev.iakunin.library.logging.servlet.filter;
 
-import dev.iakunin.library.logging.configuration.Properties;
-import dev.iakunin.library.logging.service.MdcFingerprintService;
+import dev.iakunin.library.logging.servlet.configuration.Properties;
+import dev.iakunin.library.logging.servlet.service.MdcFingerprintService;
 import java.io.IOException;
 import java.util.UUID;
 import javax.servlet.FilterChain;

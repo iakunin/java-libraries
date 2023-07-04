@@ -1,4 +1,4 @@
-include ":src:logging"
+include ":src:logging:logging-servlet"
 include ":src:feign-tracing"
 include ":src:exception-handling"
 include ":src:tests"
