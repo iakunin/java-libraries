@@ -56,7 +56,6 @@ public final class HttpLoggingHandler implements HttpHandler {
         final MockHttpServletRequest result = new MockHttpServletRequest();
         result.setMethod(Objects.requireNonNull(request.getMethod()).name());
         result.setServletPath(request.getURI().getPath());
-        result.setPathInfo(request.getURI().getPath());
 
         return result;
     }
