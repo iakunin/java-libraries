@@ -32,22 +32,6 @@ public final class RequestLoggerAdapter {
                 .body(buildBody(request))
                 .build()
         );
-
-        // try {
-        //// MDC.put(requestMdcKeys.getMethod(), request.getMethod());
-        //// if (shouldBodyBeLogged(request)) {
-        //// MDC.put(requestMdcKeys.getBody(), fieldTrimmer.trim(buildBody(request)));
-        //// }
-        //// MDC.put(requestMdcKeys.getHeaders(), fieldTrimmer.trim(headersBuilder.build(request)));
-        //// MDC.put(requestMdcKeys.getClientIp(), request.getRemoteAddr());
-        //
-        //// log.info("HTTP REQUEST");
-        // } finally {
-        // MDC.remove(requestMdcKeys.getMethod());
-        // MDC.remove(requestMdcKeys.getBody());
-        // MDC.remove(requestMdcKeys.getHeaders());
-        // MDC.remove(requestMdcKeys.getClientIp());
-        // }
     }
 
     private static Map<String, List<String>> buildHeaders(HttpServletRequest request) {

@@ -33,28 +33,6 @@ public final class ResponseLoggerAdapter {
                 .duration(duration)
                 .build()
         );
-
-        // try {
-        // MDC.put(responseMdcKeys.getStatusCode(), String.valueOf(response.getStatus()));
-        // MDC.put(
-        // responseMdcKeys.getStatusPhrase(),
-        // HttpStatus.valueOf(response.getStatus()).getReasonPhrase()
-        // );
-        // MDC.put(
-        // responseMdcKeys.getHeaders(),
-        // fieldTrimmer.trim(headersBuilder.build(response))
-        // );
-        // MDC.put(responseMdcKeys.getBody(), fieldTrimmer.trim(buildBody(response)));
-        // MDC.put(responseMdcKeys.getDurationMs(), String.valueOf(duration.toMillis()));
-        //
-        // log.info("HTTP RESPONSE");
-        // } finally {
-        // MDC.remove(responseMdcKeys.getStatusCode());
-        // MDC.remove(responseMdcKeys.getStatusPhrase());
-        // MDC.remove(responseMdcKeys.getHeaders());
-        // MDC.remove(responseMdcKeys.getBody());
-        // MDC.remove(responseMdcKeys.getDurationMs());
-        // }
     }
 
     private static Map<String, List<String>> buildHeaders(HttpServletResponse response) {
