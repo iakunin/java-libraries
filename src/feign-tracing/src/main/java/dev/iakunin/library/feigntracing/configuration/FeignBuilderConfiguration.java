@@ -34,7 +34,7 @@ public class FeignBuilderConfiguration {
     private final Logger logger;
 
     @Bean("commonFeignBuilder")
-    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public Feign.Builder feignBuilder(List<Capability> capabilities) {
         final Feign.Builder builder = Feign.builder()
             .contract(new SpringMvcContract())
