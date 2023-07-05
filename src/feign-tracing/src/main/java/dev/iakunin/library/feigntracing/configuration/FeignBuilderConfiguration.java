@@ -11,12 +11,14 @@ import feign.codec.ErrorDecoder;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Scope;
 
 @Slf4j
 @Configuration
@@ -32,6 +34,7 @@ public class FeignBuilderConfiguration {
     private final Logger logger;
 
     @Bean("commonFeignBuilder")
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public Feign.Builder feignBuilder(List<Capability> capabilities) {
         final Feign.Builder builder = Feign.builder()
             .contract(new SpringMvcContract())
