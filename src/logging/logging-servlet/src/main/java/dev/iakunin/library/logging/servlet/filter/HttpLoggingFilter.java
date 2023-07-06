@@ -2,6 +2,7 @@ package dev.iakunin.library.logging.servlet.filter;
 
 import dev.iakunin.library.logging.servlet.adapter.RequestLoggerAdapter;
 import dev.iakunin.library.logging.servlet.adapter.ResponseLoggerAdapter;
+import dev.iakunin.library.logging.servlet.wrapper.ContentCachingRequestWrapper;
 import dev.iakunin.library.logging.servlet.wrapper.StreamingAwareContentCachingResponseWrapper;
 import java.io.IOException;
 import java.time.Duration;
@@ -16,7 +17,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Slf4j
