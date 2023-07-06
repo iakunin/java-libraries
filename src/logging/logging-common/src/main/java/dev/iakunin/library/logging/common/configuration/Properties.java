@@ -22,7 +22,8 @@ public final class Properties {
     private boolean logQueryString = false;
     private List<MediaType> contentTypeWhitelist = List.of(
         new MediaType("text", "*"),
-        new MediaType("application", "json")
+        MediaType.APPLICATION_JSON,
+        MediaType.APPLICATION_FORM_URLENCODED
     );
 
     /**

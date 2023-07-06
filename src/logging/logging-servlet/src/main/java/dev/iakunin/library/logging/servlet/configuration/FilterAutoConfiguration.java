@@ -68,8 +68,7 @@ public class FilterAutoConfiguration {
             new HttpLoggingFilter(
                 requestLoggerAdapter,
                 responseLoggerAdapter,
-                requestBlacklist(),
-                contentTypeWhitelist
+                requestBlacklist()
             )
         );
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE + 2);

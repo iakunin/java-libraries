@@ -1,9 +1,7 @@
 package dev.iakunin.library.logging.servlet.filter;
 
-import dev.iakunin.library.logging.common.service.ContentTypeWhitelist;
 import dev.iakunin.library.logging.servlet.adapter.RequestLoggerAdapter;
 import dev.iakunin.library.logging.servlet.adapter.ResponseLoggerAdapter;
-import dev.iakunin.library.logging.servlet.wrapper.ContentCachingRequestWrapper;
 import dev.iakunin.library.logging.servlet.wrapper.StreamingAwareContentCachingResponseWrapper;
 import java.io.IOException;
 import java.time.Duration;
@@ -16,7 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.StopWatch;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Slf4j
@@ -26,7 +26,6 @@ public final class HttpLoggingFilter extends OncePerRequestFilter {
     private final RequestLoggerAdapter requestLogger;
     private final ResponseLoggerAdapter responseLogger;
     private final RequestMatcher requestBlacklist;
-    private final ContentTypeWhitelist contentTypeWhitelist;
 
     @Override
     protected void doFilterInternal(
@@ -65,11 +64,30 @@ public final class HttpLoggingFilter extends OncePerRequestFilter {
     }
 
     private HttpServletRequest wrapRequest(HttpServletRequest request) {
-        if (shouldBeWrapped(request)) {
-            return new ContentCachingRequestWrapper(request);
+        if (isForm(request)) {
+            return request;
         }
 
-        return request;
+        if (request instanceof ContentCachingRequestWrapper) {
+            return request;
+        } else {
+            return new ContentCachingRequestWrapper(request);
+        }
+    }
+
+    private boolean isForm(HttpServletRequest request) {
+        final String requestContentType = request.getContentType();
+        if (StringUtils.hasLength(requestContentType)) {
+            try {
+                return MediaType.APPLICATION_FORM_URLENCODED.includes(
+                    MediaType.parseMediaType(requestContentType)
+                );
+            } catch (IllegalArgumentException ex) {
+                log.debug("Unable to parse MediaType from '{}'", request.getContentType(), ex);
+            }
+        }
+
+        return false;
     }
 
     private ContentCachingResponseWrapper wrapResponse(
@@ -80,20 +98,6 @@ public final class HttpLoggingFilter extends OncePerRequestFilter {
             return (ContentCachingResponseWrapper) response;
         } else {
             return new StreamingAwareContentCachingResponseWrapper(response, request);
-        }
-    }
-
-    private boolean shouldBeWrapped(HttpServletRequest request) {
-        if (request instanceof ContentCachingRequestWrapper) {
-            return false;
-        }
-
-        try {
-            final MediaType mediaType = MediaType.parseMediaType(request.getContentType());
-            return contentTypeWhitelist.contains(mediaType);
-        } catch (IllegalArgumentException ex) {
-            log.debug("Unable to parse MediaType from '{}'", request.getContentType());
-            return false;
         }
     }
 
