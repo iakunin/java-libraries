@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    dev.iakunin.library.exceptionhandling.ExceptionHandler
+    dev.iakunin.library.exceptionhandling.handler.ExceptionHandler

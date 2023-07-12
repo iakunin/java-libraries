@@ -1,4 +1,4 @@
-package dev.iakunin.library.exceptionhandling;
+package dev.iakunin.library.exceptionhandling.handler;
 
 import dev.iakunin.library.logging.common.configuration.ServicesConfiguration;
 import dev.iakunin.library.logging.common.service.MdcFingerprintService;

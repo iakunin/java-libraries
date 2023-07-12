@@ -5,7 +5,7 @@ bootJar.enabled = false
 jar.enabled = true
 archivesBaseName = "library-exception-handling"
 
-project.version = "0.0.18"
+project.version = "0.0.19"
 
 dependencies {
 
