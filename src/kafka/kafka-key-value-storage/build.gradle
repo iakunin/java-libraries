@@ -2,7 +2,7 @@ jar.enabled = true
 
 archivesBaseName = 'kafka-' + name
 
-project.version = '0.0.2'
+project.version = '0.0.3'
 
 apply from: "$rootDir/gradle/publishing.gradle"
 

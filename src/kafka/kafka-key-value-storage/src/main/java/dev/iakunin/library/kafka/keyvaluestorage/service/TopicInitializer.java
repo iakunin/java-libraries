@@ -96,7 +96,7 @@ public class TopicInitializer implements Consumer<TopicAdmin> {
         return createTopicsWithRetry(
             admin,
             topicDescription,
-            adminClientConfig.getLong(AdminClientConfig.DEFAULT_API_TIMEOUT_MS_CONFIG),
+            (long) adminClientConfig.getInt(AdminClientConfig.DEFAULT_API_TIMEOUT_MS_CONFIG),
             adminClientConfig.getLong(AdminClientConfig.RETRY_BACKOFF_MS_CONFIG),
             time
         );
