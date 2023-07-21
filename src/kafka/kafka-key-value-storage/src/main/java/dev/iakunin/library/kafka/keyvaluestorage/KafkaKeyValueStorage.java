@@ -133,8 +133,8 @@ public class KafkaKeyValueStorage<K, V> {
         return new ConcurrentHashMap<>(map);
     }
 
-    public V get(K ket) {
-        log.debug("Getting value by key='{}'", ket);
+    public V get(K key) {
+        log.debug("Getting value by key='{}'", key);
 
         try {
             final Timer timer = time.timer(READ_WRITE_TOTAL_TIMEOUT_MS);
@@ -144,7 +144,7 @@ public class KafkaKeyValueStorage<K, V> {
             throw new KafkaStorageException("Error getting data from Kafka", ex);
         }
 
-        return map.get(ket);
+        return map.get(key);
     }
 
     /**
