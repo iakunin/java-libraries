@@ -45,7 +45,9 @@ public class KafkaKeyValueStorage<K, V> {
 
     public KafkaKeyValueStorage(
         String bootstrapServers,
-        String topicName
+        String topicName,
+        Class<K> keyType,
+        Class<V> valueType
     ) {
         this.topicName = topicName;
         if (this.topicName == null || this.topicName.isBlank()) {
@@ -60,7 +62,9 @@ public class KafkaKeyValueStorage<K, V> {
             this.topicName,
             this.map,
             this.time,
-            configsFactory
+            configsFactory,
+            keyType,
+            valueType
         );
     }
 

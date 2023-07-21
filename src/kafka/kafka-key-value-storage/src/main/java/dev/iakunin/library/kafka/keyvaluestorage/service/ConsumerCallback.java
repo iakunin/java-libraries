@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,8 @@ public class ConsumerCallback<K, V> implements Callback<ConsumerRecord<String, b
 
     private final ObjectMapper objectMapper;
     private final Map<K, V> map;
+    private final Class<K> keyType;
+    private final Class<V> valueType;
 
     @Override
     public void onCompletion(Throwable error, ConsumerRecord<String, byte[]> record) {
@@ -27,7 +30,7 @@ public class ConsumerCallback<K, V> implements Callback<ConsumerRecord<String, b
 
         final K deserializedKey;
         try {
-            deserializedKey = objectMapper.readValue(record.key(), new TypeReference<>() {});
+            deserializedKey = objectMapper.readValue(record.key(), keyType);
         } catch (JsonProcessingException ex) {
             log.error("Failed to deserialize key: ", ex);
             return;
@@ -35,8 +38,7 @@ public class ConsumerCallback<K, V> implements Callback<ConsumerRecord<String, b
 
         final V deserializedValue;
         try {
-            deserializedValue =
-                objectMapper.readValue(record.value(), new TypeReference<>() {});
+            deserializedValue = objectMapper.readValue(record.value(), valueType);
         } catch (IOException ex) {
             log.error("Failed to deserialize value: ", ex);
             return;

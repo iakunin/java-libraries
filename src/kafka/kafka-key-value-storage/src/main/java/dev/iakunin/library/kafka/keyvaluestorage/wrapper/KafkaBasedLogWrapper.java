@@ -28,13 +28,20 @@ public class KafkaBasedLogWrapper<K, V> extends KafkaBasedLog<String, byte[]> {
         String topicName,
         Map<K, V> map,
         Time time,
-        StorageConfigsFactory configsFactory
+        StorageConfigsFactory configsFactory,
+        Class<K> keyType,
+        Class<V> valueType
     ) {
         this(
             topicName,
             new KafkaConsumer<>(configsFactory.consumerConfigs()),
             new SharedTopicAdmin(configsFactory.adminConfigs()),
-            new ConsumerCallback<>(new ObjectMapper(), map),
+            new ConsumerCallback<>(
+                new ObjectMapper(),
+                map,
+                keyType,
+                valueType
+            ),
             time,
             new TopicInitializer(
                 configsFactory.adminConfigs(),
