@@ -222,7 +222,9 @@
         <!-- Miscellaneous other checks. -->
         <module name="UpperEll"/>
         <module name="ArrayTypeStyle"/>
-        <module name="Indentation"/>
+        <module name="Indentation">
+            <property name="arrayInitIndent" value="0"/>
+        </module>
         <module name="CommentsIndentation"/>
         <module name="TrailingComment"/>
         <module name="OuterTypeFilename"/>

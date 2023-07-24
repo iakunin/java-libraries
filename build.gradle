@@ -88,7 +88,7 @@ subprojects {
 
     checkstyle {
         configFile file("${project.rootDir}/etc/quality/checkstyle.xml")
-        toolVersion "8.37"
+        toolVersion "10.12.1"
         maxWarnings = 0
     }
 
