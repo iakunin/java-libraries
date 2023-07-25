@@ -10,7 +10,9 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 @Slf4j
-@SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
+@SuppressWarnings(
+    {"PMD.AvoidThrowingRawExceptionTypes", "PMD.AbstractClassWithoutAbstractMethod", }
+)
 public abstract class AbstractIntegrationTest {
 
     protected static final Connection CONNECTION;

@@ -50,7 +50,7 @@ public final class MonetaryAmountTest {
                 Money.of(BigDecimal.valueOf(100), USD_CURRENCY_CODE),
                 new Object[] {
                     Monetary.getCurrency(USD_CURRENCY_CODE),
-                    BigDecimal.valueOf(10000),
+                    BigDecimal.valueOf(10_000),
                 }
             ),
             Arguments.of(
@@ -71,48 +71,48 @@ public final class MonetaryAmountTest {
                 Money.of(BigDecimal.valueOf(123.99), USD_CURRENCY_CODE),
                 new Object[] {
                     Monetary.getCurrency(USD_CURRENCY_CODE),
-                    BigDecimal.valueOf(12399),
+                    BigDecimal.valueOf(12_399),
                 }
             ),
             Arguments.of(
                 Money.of(BigDecimal.valueOf(456.11), USD_CURRENCY_CODE),
                 new Object[] {
                     Monetary.getCurrency(USD_CURRENCY_CODE),
-                    BigDecimal.valueOf(45611),
+                    BigDecimal.valueOf(45_611),
                 }
             ),
             Arguments.of(
-                Money.of(BigDecimal.valueOf(123456.78), USD_CURRENCY_CODE),
+                Money.of(BigDecimal.valueOf(123_456.78), USD_CURRENCY_CODE),
                 new Object[] {
                     Monetary.getCurrency(USD_CURRENCY_CODE),
-                    BigDecimal.valueOf(12345678),
+                    BigDecimal.valueOf(12_345_678),
                 }
             ),
             Arguments.of(
                 Money.of(BigDecimal.valueOf(123_456.789_999), USD_CURRENCY_CODE),
                 new Object[] {
                     Monetary.getCurrency(USD_CURRENCY_CODE),
-                    BigDecimal.valueOf(123_456_78),
+                    BigDecimal.valueOf(12_345_678),
                 }
             ),
             Arguments.of(
                 Money.of(
-                    BigDecimal.valueOf(2.2345_6789),
+                    BigDecimal.valueOf(2.234_567_89),
                     MonetaryAmountTest.BITCOIN
                 ),
                 new Object[] {
                     MonetaryAmountTest.BITCOIN,
-                    BigDecimal.valueOf(2_2345_6789),
+                    BigDecimal.valueOf(223_456_789),
                 }
             ),
             Arguments.of(
                 Money.of(
-                    BigDecimal.valueOf(9.2345_6789_123),
+                    BigDecimal.valueOf(9.234_567_891_23),
                     MonetaryAmountTest.BITCOIN
                 ),
                 new Object[] {
                     MonetaryAmountTest.BITCOIN,
-                    BigDecimal.valueOf(9_2345_6789),
+                    BigDecimal.valueOf(923_456_789),
                 }
             ),
             Arguments.of(
@@ -122,7 +122,7 @@ public final class MonetaryAmountTest {
                 ),
                 new Object[] {
                     MonetaryAmountTest.BITCOIN,
-                    BigDecimal.valueOf(11_23_000_000),
+                    BigDecimal.valueOf(1_123_000_000),
                 }
             ),
             Arguments.of(
@@ -231,7 +231,7 @@ public final class MonetaryAmountTest {
             Arguments.of(
                 new Object[] {
                     Monetary.getCurrency(USD_CURRENCY_CODE),
-                    BigDecimal.valueOf(10000),
+                    BigDecimal.valueOf(10_000),
                 },
                 Money.of(BigDecimal.valueOf(100), USD_CURRENCY_CODE)
             ),
@@ -252,55 +252,55 @@ public final class MonetaryAmountTest {
             Arguments.of(
                 new Object[] {
                     Monetary.getCurrency(USD_CURRENCY_CODE),
-                    BigDecimal.valueOf(12399),
+                    BigDecimal.valueOf(12_399),
                 },
                 Money.of(BigDecimal.valueOf(123.99), USD_CURRENCY_CODE)
             ),
             Arguments.of(
                 new Object[] {
                     Monetary.getCurrency(USD_CURRENCY_CODE),
-                    BigDecimal.valueOf(45611),
+                    BigDecimal.valueOf(45_611),
                 },
                 Money.of(BigDecimal.valueOf(456.11), USD_CURRENCY_CODE)
             ),
             Arguments.of(
                 new Object[] {
                     Monetary.getCurrency(USD_CURRENCY_CODE),
-                    BigDecimal.valueOf(12345678),
+                    BigDecimal.valueOf(12_345_678),
                 },
-                Money.of(BigDecimal.valueOf(123456.78), USD_CURRENCY_CODE)
+                Money.of(BigDecimal.valueOf(123_456.78), USD_CURRENCY_CODE)
             ),
             Arguments.of(
                 new Object[] {
                     Monetary.getCurrency(USD_CURRENCY_CODE),
-                    BigDecimal.valueOf(12345678_99),
+                    BigDecimal.valueOf(1_234_567_899),
                 },
-                Money.of(BigDecimal.valueOf(12345678.99), USD_CURRENCY_CODE)
+                Money.of(BigDecimal.valueOf(12_345_678.99), USD_CURRENCY_CODE)
             ),
             Arguments.of(
                 new Object[] {
                     MonetaryAmountTest.BITCOIN,
-                    BigDecimal.valueOf(2_2345_6789),
+                    BigDecimal.valueOf(223_456_789),
                 },
                 Money.of(
-                    BigDecimal.valueOf(2.2345_6789),
+                    BigDecimal.valueOf(2.234_567_89),
                     MonetaryAmountTest.BITCOIN
                 )
             ),
             Arguments.of(
                 new Object[] {
                     MonetaryAmountTest.BITCOIN,
-                    BigDecimal.valueOf(9_2345_6789),
+                    BigDecimal.valueOf(923_456_789),
                 },
                 Money.of(
-                    BigDecimal.valueOf(9.2345_6789),
+                    BigDecimal.valueOf(9.234_567_89),
                     MonetaryAmountTest.BITCOIN
                 )
             ),
             Arguments.of(
                 new Object[] {
                     MonetaryAmountTest.BITCOIN,
-                    BigDecimal.valueOf(11_23_000_000),
+                    BigDecimal.valueOf(1_123_000_000),
                 },
                 Money.of(
                     BigDecimal.valueOf(11.23),

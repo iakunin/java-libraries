@@ -18,7 +18,7 @@ public final class Properties {
     private String sessionFingerprintHeader = "x-session-fingerprint";
     private String requestIdHeader = "x-server-request-id";
     private MdcKeys mdcKeys = new MdcKeys();
-    private Integer fieldMaxLength = 20000;
+    private Integer fieldMaxLength = 20_000;
     private boolean logQueryString = false;
     private List<MediaType> contentTypeWhitelist = List.of(
         new MediaType("text", "*"),

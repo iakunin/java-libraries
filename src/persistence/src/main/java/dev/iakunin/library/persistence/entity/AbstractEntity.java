@@ -21,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @Setter
 @ToString
-@SuppressWarnings("PMD.AbstractClassWithoutAnyMethod")
+@SuppressWarnings({"PMD.AbstractClassWithoutAnyMethod", "PMD.AbstractClassWithoutAbstractMethod", })
 public abstract class AbstractEntity {
 
     @Id

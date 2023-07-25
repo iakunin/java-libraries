@@ -78,7 +78,7 @@ subprojects {
     }
 
     pmd {
-        toolVersion = "6.39.0"
+        toolVersion = "6.55.0"
         consoleOutput = true
         ignoreFailures = false
         rulesMinimumPriority = 5

@@ -20,6 +20,7 @@ import org.javamoney.moneta.Money;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public class TestEntity {
 
     @Id

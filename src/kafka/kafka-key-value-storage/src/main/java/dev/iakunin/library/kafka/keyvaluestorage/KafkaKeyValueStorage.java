@@ -28,7 +28,7 @@ import org.apache.kafka.connect.util.KafkaBasedLog;
 )
 public class KafkaKeyValueStorage<K, V> {
 
-    private static final long READ_WRITE_TOTAL_TIMEOUT_MS = 30000;
+    private static final long READ_WRITE_TOTAL_TIMEOUT_MS = 30_000;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 

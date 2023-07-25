@@ -29,7 +29,7 @@ public final class MapOfStringToObject extends AbstractMapUserType<String, Objec
             return OBJECT_MAPPER.readValue(value, Map.class);
         } catch (final IOException ex) {
             log.error("JSON reading error", ex);
-            return null;
+            return Map.of();
         }
     }
 }
