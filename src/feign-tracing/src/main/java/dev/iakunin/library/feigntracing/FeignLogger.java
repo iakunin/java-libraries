@@ -38,6 +38,11 @@ public class FeignLogger extends feign.Logger {
     }
 
     @Override
+    protected void logRetry(String configKey, Level logLevel) {
+        logger.info(methodTag(configKey) + "####### RETRYING #######");
+    }
+
+    @Override
     protected Response logAndRebufferResponse(
         String configKey,
         Level logLevel,

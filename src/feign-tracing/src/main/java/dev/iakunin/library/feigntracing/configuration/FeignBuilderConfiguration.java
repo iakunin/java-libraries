@@ -7,7 +7,6 @@ import feign.Logger;
 import feign.Retryer;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
-import feign.codec.ErrorDecoder;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +29,6 @@ public class FeignBuilderConfiguration {
     private final SessionFingerprintInterceptor sessionFingerprintInterceptor;
     private final Encoder encoder;
     private final Decoder decoder;
-    private final ErrorDecoder errorDecoder;
     private final Logger logger;
 
     @Bean("commonFeignBuilder")
@@ -42,7 +40,6 @@ public class FeignBuilderConfiguration {
             .requestInterceptor(sessionFingerprintInterceptor)
             .encoder(encoder)
             .decoder(decoder)
-            .errorDecoder(errorDecoder)
             .logLevel(Logger.Level.FULL)
             .logger(logger);
 
