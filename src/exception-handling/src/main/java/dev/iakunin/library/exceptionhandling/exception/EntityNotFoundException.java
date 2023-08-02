@@ -7,6 +7,10 @@ import org.zalando.problem.Status;
 public class EntityNotFoundException extends AbstractThrowableProblem {
 
     public EntityNotFoundException(String entityName, UUID id) {
+        this(entityName, id.toString());
+    }
+
+    public EntityNotFoundException(String entityName, String id) {
         super(
             Status.NOT_FOUND,
             String.format(
