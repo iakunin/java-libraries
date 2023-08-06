@@ -11,12 +11,17 @@ public class EntityNotFoundException extends AbstractThrowableProblem {
     }
 
     public EntityNotFoundException(String entityName, String id) {
+        this(entityName, "id", id);
+    }
+
+    public EntityNotFoundException(String entityName, String fieldName, String fieldValue) {
         super(
             Status.NOT_FOUND,
             String.format(
-                "Unable to find '%s' entity by id='%s'",
+                "Unable to find '%s' entity by '%s'='%s'",
                 entityName,
-                id
+                fieldName,
+                fieldValue
             )
         );
     }
