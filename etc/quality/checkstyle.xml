@@ -11,42 +11,7 @@
     <property name="localeLanguage" value="en"/>
     <property name="charset" value="UTF-8"/>
     <property name="severity" value="warning"/>
-    <module name="SuppressionSingleFilter">
-        <property name="checks" value="FileLength"/>
-        <property name="files" value="UserControllerInternalTest.java"/>
-    </module>
-    <module name="SuppressionSingleFilter">
-        <property name="checks" value="FileLength"/>
-        <property name="files" value="OutcomeStatusResolverImplTest.java"/>
-    </module>
-    <module name="SuppressionSingleFilter">
-        <property name="checks" value="FileLength"/>
-        <property name="files" value="LineOddsUpdateUseCaseTest.java"/>
-    </module>
-    <module name="SuppressionSingleFilter">
-        <property name="checks" value="FileLength"/>
-        <property name="files" value="MixerStateValidatorTest.java"/>
-    </module>
-    <module name="SuppressionSingleFilter">
-        <property name="checks" value="FileLength"/>
-        <property name="files" value="ReceiveLineSubcategoryCommandHandlerTest.java"/>
-    </module>
-    <module name="SuppressionSingleFilter">
-        <property name="checks" value=".*"/>
-        <property name="files" value="CouponFlowConfigurationTest.java"/>
-    </module>
-    <module name="SuppressionSingleFilter">
-        <property name="checks" value="FileLength"/>
-        <property name="files" value="SportSourceAcceptanceValidatorTest.java"/>
-    </module>
-    <module name="SuppressionSingleFilter">
-        <property name="checks" value="FileLength"/>
-        <property name="files" value="BettingLimitRuleCreateUseCaseTest.java"/>
-    </module>
-    <module name="SuppressionSingleFilter">
-        <property name="checks" value="FileLength"/>
-        <property name="files" value="BettingLimitRuleUpdateUseCaseTest.java"/>
-    </module>
+
     <module name="NewlineAtEndOfFile">
         <property name="fileExtensions" value="java"/>
         <property name="lineSeparator" value="lf"/>
