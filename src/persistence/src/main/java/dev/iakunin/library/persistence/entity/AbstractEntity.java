@@ -27,14 +27,15 @@ public abstract class AbstractEntity {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     protected UUID id;
 
-    @Column(updatable = false)
+    @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     protected ZonedDateTime createdAt;
 
+    @Column(name = "updated_at")
     @UpdateTimestamp
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     protected ZonedDateTime updatedAt;
