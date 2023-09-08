@@ -1,6 +1,7 @@
 package dev.iakunin.library.persistence.entity;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -21,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @Setter
 @ToString
-@SuppressWarnings({"PMD.AbstractClassWithoutAnyMethod", "PMD.AbstractClassWithoutAbstractMethod", })
+@SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "checkstyle:LineLength", })
 public abstract class AbstractEntity {
 
     @Id
@@ -39,5 +41,31 @@ public abstract class AbstractEntity {
     @UpdateTimestamp
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     protected ZonedDateTime updatedAt;
+
+    /**
+     * For more info about current `equals(...)` and `hashCode()` implementations see: <a href=
+     * "https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier">
+     * this article </a>.
+     */
+    @Override
+    public final boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) {
+            return false;
+        }
+        return Objects.equals(id, ((AbstractEntity) other).id);
+    }
+
+    /**
+     * For more info about current `equals(...)` and `hashCode()` implementations see: <a href=
+     * "https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier">
+     * this article </a>.
+     */
+    @Override
+    public final int hashCode() {
+        return getClass().hashCode();
+    }
 
 }
