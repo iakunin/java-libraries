@@ -3,9 +3,9 @@ apply plugin: "org.springframework.boot"
 bootJar.enabled = false
 jar.enabled = true
 
-archivesBaseName = 'library-' + name
+archivesBaseName = "library-logging-reactive"
 
-project.version = '0.0.29'
+project.version = "1.0.0"
 
 apply from: "$rootDir/gradle/publishing.gradle"
 
@@ -15,7 +15,7 @@ dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation "org.springframework.boot:spring-boot-starter-webflux"
     implementation "org.springframework.security:spring-security-web"
-    implementation "javax.servlet:javax.servlet-api:4.0.1"
+    implementation "jakarta.servlet:jakarta.servlet-api:6.0.0"
 
     // needed for MockHttpServletRequest
     implementation "org.springframework:spring-test"

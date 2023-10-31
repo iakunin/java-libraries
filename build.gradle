@@ -1,12 +1,12 @@
 plugins {
-    id "org.springframework.boot" version "2.7.13" apply false
-    id "io.spring.dependency-management" version "1.1.0" apply false
+    id "org.springframework.boot" version "3.1.5" apply false
+    id "io.spring.dependency-management" version "1.1.3" apply false
     id "com.diffplug.spotless" version "5.12.5" apply false
-    id "com.github.spotbugs" version "5.0.14" apply false
+    id "com.github.spotbugs" version "5.2.1" apply false
 }
 
 ext {
-    lombokVersion="1.18.28"
+    lombokVersion="1.18.30"
 }
 
 subprojects {
@@ -22,7 +22,7 @@ subprojects {
     apply plugin: "jacoco"
 
     group = "dev.iakunin.library"
-    sourceCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
 
     repositories {
         mavenCentral()

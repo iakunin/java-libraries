@@ -4,12 +4,12 @@ apply plugin: "org.springframework.boot"
 bootJar.enabled = false
 jar.enabled = true
 archivesBaseName = "library-tests"
-project.version = "0.0.11"
+project.version = "1.0.0"
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-test"
-    implementation "org.apache.commons:commons-lang3:3.12.0"
+    implementation "org.apache.commons:commons-lang3:3.13.0"
     implementation "org.hamcrest:hamcrest:2.2"
-    implementation "com.github.database-rider:rider-core:1.33.0"
+    implementation "com.github.database-rider:rider-core:1.41.0"
 }

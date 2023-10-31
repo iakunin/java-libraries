@@ -5,9 +5,9 @@ bootJar.enabled = false
 jar.enabled = true
 archivesBaseName = "library-feign-tracing"
 
-project.version = "0.0.24"
+project.version = "1.0.0"
 
-def feignVersion="11.8"
+def feignVersion="13.0"
 
 dependencies {
 
@@ -15,7 +15,7 @@ dependencies {
 
     implementation "org.springframework.boot:spring-boot-starter-web"
 
-    api "org.springframework.cloud:spring-cloud-starter-openfeign:3.1.8"
+    api "org.springframework.cloud:spring-cloud-starter-openfeign:4.0.4"
     api "io.github.openfeign:feign-core:${feignVersion}"
     api "io.github.openfeign:feign-jackson:${feignVersion}"
     api "io.github.openfeign:feign-micrometer:${feignVersion}"

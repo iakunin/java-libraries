@@ -3,9 +3,9 @@ apply plugin: "org.springframework.boot"
 bootJar.enabled = false
 jar.enabled = true
 
-archivesBaseName = 'library-' + name
+archivesBaseName = "library-logging-servlet"
 
-project.version = '0.0.26'
+project.version = "1.0.0"
 
 apply from: "$rootDir/gradle/publishing.gradle"
 
@@ -15,5 +15,5 @@ dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.security:spring-security-web"
-    implementation "commons-io:commons-io:2.11.0"
+    implementation "commons-io:commons-io:2.15.0"
 }

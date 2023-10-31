@@ -1,5 +1,6 @@
 package dev.iakunin.library.logging.reactive.wrapper;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -20,8 +21,10 @@ public final class BodyCaptureRequest extends ServerHttpRequestDecorator {
         return super.getBody().doOnNext(this::capture);
     }
 
-    private void capture(DataBuffer buffer) {
-        body.append(StandardCharsets.UTF_8.decode(buffer.asByteBuffer()));
+    private void capture(DataBuffer dataBuffer) {
+        final ByteBuffer byteBuffer = ByteBuffer.allocate(dataBuffer.readableByteCount());
+        dataBuffer.toByteBuffer(byteBuffer);
+        body.append(StandardCharsets.UTF_8.decode(byteBuffer));
     }
 
     public String getFullBody() {

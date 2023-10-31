@@ -4,6 +4,7 @@ import dev.iakunin.library.logging.common.logger.ResponseLogger;
 import java.time.Duration;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,11 @@ public final class ResponseLoggerAdapter {
     public void log(ServerHttpResponse response, String body, Duration duration) {
         responseLogger.log(
             ResponseLogger.Arguments.builder()
-                .statusCode(Objects.requireNonNull(response.getStatusCode()))
+                .statusCode(
+                    HttpStatus.valueOf(
+                        Objects.requireNonNull(response.getStatusCode()).value()
+                    )
+                )
                 .headers(response.getHeaders())
                 .body(body)
                 .duration(duration)

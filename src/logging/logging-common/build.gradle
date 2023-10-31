@@ -3,9 +3,9 @@ apply plugin: "org.springframework.boot"
 bootJar.enabled = false
 jar.enabled = true
 
-archivesBaseName = 'library-' + name
+archivesBaseName = "library-logging-common"
 
-project.version = '0.0.8'
+project.version = "1.0.0"
 
 apply from: "$rootDir/gradle/publishing.gradle"
 
