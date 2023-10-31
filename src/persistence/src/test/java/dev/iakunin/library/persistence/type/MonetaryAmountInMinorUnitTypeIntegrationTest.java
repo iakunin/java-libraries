@@ -1,4 +1,4 @@
-package dev.iakunin.library.persistence.converter;
+package dev.iakunin.library.persistence.type;
 
 import dev.iakunin.library.persistence.AbstractIntegrationTest;
 import dev.iakunin.library.persistence.entity.TestEntity;
@@ -31,7 +31,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
         "PMD.ExcessiveMethodLength",
     }
 )
-public final class MonetaryAmountIntegrationTest extends AbstractIntegrationTest {
+public final class MonetaryAmountInMinorUnitTypeIntegrationTest extends AbstractIntegrationTest {
 
     private static final String USD_CURRENCY_CODE = "USD";
 
@@ -92,70 +92,70 @@ public final class MonetaryAmountIntegrationTest extends AbstractIntegrationTest
             Arguments.of(
                 Money.of(
                     BigDecimal.valueOf(2.234_567_89),
-                    MonetaryAmountIntegrationTest.BITCOIN
+                    MonetaryAmountInMinorUnitTypeIntegrationTest.BITCOIN
                 ),
                 BigDecimal.valueOf(223_456_789)
             ),
             Arguments.of(
                 Money.of(
                     BigDecimal.valueOf(9.234_567_891_23),
-                    MonetaryAmountIntegrationTest.BITCOIN
+                    MonetaryAmountInMinorUnitTypeIntegrationTest.BITCOIN
                 ),
                 BigDecimal.valueOf(923_456_789)
             ),
             Arguments.of(
                 Money.of(
                     BigDecimal.valueOf(11.23),
-                    MonetaryAmountIntegrationTest.BITCOIN
+                    MonetaryAmountInMinorUnitTypeIntegrationTest.BITCOIN
                 ),
                 BigDecimal.valueOf(1_123_000_000)
             ),
             Arguments.of(
                 Money.of(
                     BigDecimal.valueOf(3),
-                    MonetaryAmountIntegrationTest.CURRENCY_SIXTEEN_PRECISION
+                    MonetaryAmountInMinorUnitTypeIntegrationTest.CURRENCY_SIXTEEN_PRECISION
                 ),
                 new BigDecimal("3_0000_0000_0000_0000".replace("_", ""))
             ),
             Arguments.of(
                 Money.of(
                     BigDecimal.valueOf(2.1234),
-                    MonetaryAmountIntegrationTest.CURRENCY_SIXTEEN_PRECISION
+                    MonetaryAmountInMinorUnitTypeIntegrationTest.CURRENCY_SIXTEEN_PRECISION
                 ),
                 new BigDecimal("2_1234_0000_0000_0000".replace("_", ""))
             ),
             Arguments.of(
                 Money.of(
                     new BigDecimal("2.1234_5678_1234_1234".replace("_", "")),
-                    MonetaryAmountIntegrationTest.CURRENCY_SIXTEEN_PRECISION
+                    MonetaryAmountInMinorUnitTypeIntegrationTest.CURRENCY_SIXTEEN_PRECISION
                 ),
                 new BigDecimal("2_1234_5678_1234_1234".replace("_", ""))
             ),
             Arguments.of(
                 Money.of(
                     new BigDecimal("2.1234_5678_1234_1234_9999".replace("_", "")),
-                    MonetaryAmountIntegrationTest.CURRENCY_SIXTEEN_PRECISION
+                    MonetaryAmountInMinorUnitTypeIntegrationTest.CURRENCY_SIXTEEN_PRECISION
                 ),
                 new BigDecimal("2_1234_5678_1234_1234".replace("_", ""))
             ),
             Arguments.of(
                 Money.of(
                     new BigDecimal("2.1234_5678_1234_1234_9999".replace("_", "")),
-                    MonetaryAmountIntegrationTest.CURRENCY_SIXTEEN_PRECISION
+                    MonetaryAmountInMinorUnitTypeIntegrationTest.CURRENCY_SIXTEEN_PRECISION
                 ),
                 new BigDecimal("2_1234_5678_1234_1234".replace("_", ""))
             ),
             Arguments.of(
                 Money.of(
                     new BigDecimal("2.1234_5678_1234_1234".replace("_", "")),
-                    MonetaryAmountIntegrationTest.CURRENCY_THIRTY_TWO_PRECISION
+                    MonetaryAmountInMinorUnitTypeIntegrationTest.CURRENCY_THIRTY_TWO_PRECISION
                 ),
                 new BigDecimal("2_1234_5678_1234_1234_0000_0000_0000_0000".replace("_", ""))
             ),
             Arguments.of(
                 Money.of(
                     new BigDecimal("2.1234_5678_1234_5678_1234_5678_1234_5678".replace("_", "")),
-                    MonetaryAmountIntegrationTest.CURRENCY_THIRTY_TWO_PRECISION
+                    MonetaryAmountInMinorUnitTypeIntegrationTest.CURRENCY_THIRTY_TWO_PRECISION
                 ),
                 new BigDecimal("2_1234_5678_1234_5678_1234_5678_1234_5678".replace("_", ""))
             ),
@@ -164,7 +164,7 @@ public final class MonetaryAmountIntegrationTest extends AbstractIntegrationTest
                     new BigDecimal(
                         "2.1234_5678_1234_5678_1234_5678_1234_5678_9999".replace("_", "")
                     ),
-                    MonetaryAmountIntegrationTest.CURRENCY_THIRTY_TWO_PRECISION
+                    MonetaryAmountInMinorUnitTypeIntegrationTest.CURRENCY_THIRTY_TWO_PRECISION
                 ),
                 new BigDecimal("2_1234_5678_1234_5678_1234_5678_1234_5678".replace("_", ""))
             )
@@ -183,7 +183,7 @@ public final class MonetaryAmountIntegrationTest extends AbstractIntegrationTest
     }
 
     private TestEntity createEntity(Money moneyAmount) {
-        return new TestEntity().setMoneyAmount(moneyAmount);
+        return new TestEntity().setPrice(moneyAmount);
     }
 
     private void saveEntity(TestEntity entity) {
@@ -193,14 +193,14 @@ public final class MonetaryAmountIntegrationTest extends AbstractIntegrationTest
 
     @SneakyThrows
     private void assertAmount(TestEntity entity, BigDecimal expectedAmount) {
-        final String sql = "SELECT amount FROM test_entity WHERE id = ?";
+        final String sql = "SELECT price_amount FROM test_entity WHERE id = ?";
 
         try (PreparedStatement preparedStatement = CONNECTION.prepareStatement(sql)) {
             preparedStatement.setLong(1, entity.getId());
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 resultSet.next();
-                final BigDecimal actualAmount = resultSet.getBigDecimal("amount");
+                final BigDecimal actualAmount = resultSet.getBigDecimal("price_amount");
                 MatcherAssert.assertThat(
                     actualAmount,
                     Matchers.comparesEqualTo(expectedAmount)
@@ -211,14 +211,14 @@ public final class MonetaryAmountIntegrationTest extends AbstractIntegrationTest
 
     @SneakyThrows
     private void assertCurrency(TestEntity entity, CurrencyUnit expectedCurrency) {
-        final String sql = "SELECT currency FROM test_entity WHERE id = ?";
+        final String sql = "SELECT price_currency FROM test_entity WHERE id = ?";
 
         try (PreparedStatement preparedStatement = CONNECTION.prepareStatement(sql)) {
             preparedStatement.setLong(1, entity.getId());
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 resultSet.next();
-                final String actualCurrencyCode = resultSet.getString("currency");
+                final String actualCurrencyCode = resultSet.getString("price_currency");
                 MatcherAssert.assertThat(
                     actualCurrencyCode,
                     Matchers.equalTo(expectedCurrency.getCurrencyCode())

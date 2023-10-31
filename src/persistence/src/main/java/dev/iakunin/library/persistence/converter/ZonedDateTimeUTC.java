@@ -1,11 +1,11 @@
 package dev.iakunin.library.persistence.converter;
 
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
 
 /*
  * Has been taken from here: https://gist.github.com/elviejokike/47e18e0836a86fb789e7c00b69e22847

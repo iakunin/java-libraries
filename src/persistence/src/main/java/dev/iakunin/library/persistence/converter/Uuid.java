@@ -1,8 +1,8 @@
 package dev.iakunin.library.persistence.converter;
 
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import java.util.UUID;
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
 
 @Converter
 public final class Uuid implements AttributeConverter<UUID, String> {
