@@ -17,13 +17,12 @@ import org.javamoney.moneta.Money;
 import org.javamoney.moneta.spi.DefaultRoundingProvider;
 
 /**
- * Represents MonetaryAmount in minor currency units.
- * <br/>
+ * Represents MonetaryAmount in minor currency units.<br/>
  * For example:
  * <ul>
- *   <li>Money.of("12.34", "USD") will be saved as a pair of "1234" and "USD"<li/>
- *   <li>Money.of("0.00000001", "BTC") will be saved as a pair of "1" and "BTC"<li/>
- * <ul/>
+ * <li>Money.of("12.34", "USD") will be saved as a pair of "1234" and "USD"
+ * <li>Money.of("0.00000001", "BTC") will be saved as a pair of "1" and "BTC"
+ * </ul>
  */
 @NoArgsConstructor
 public class MonetaryAmountInMinorUnitType implements CompositeUserType<MonetaryAmount> {
