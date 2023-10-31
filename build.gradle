@@ -22,7 +22,7 @@ subprojects {
     apply plugin: "jacoco"
 
     group = "dev.iakunin.library"
-    sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = "17"
 
     repositories {
         mavenCentral()
