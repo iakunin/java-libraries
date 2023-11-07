@@ -12,6 +12,7 @@ import org.zalando.problem.Problem;
 import org.zalando.problem.ProblemBuilder;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
 import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
+import org.zalando.problem.violations.ConstraintViolationProblem;
 
 @ControllerAdvice
 @RequiredArgsConstructor
@@ -35,6 +36,10 @@ public class ExceptionHandler implements ProblemHandling, SecurityAdviceTrait {
             .withInstance(problem.getInstance());
         problem.getParameters().forEach(problemBuilder::with);
         problemBuilder.with("sessionFingerprint", mdcFingerprintService.getSession());
+
+        if (problem instanceof ConstraintViolationProblem constraintViolationProblem) {
+            problemBuilder.with("violations", constraintViolationProblem.getViolations());
+        }
 
         return ProblemHandling.super.create(
             throwable,
