@@ -16,18 +16,18 @@ import org.hibernate.annotations.UuidGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * Base class for all user-defined entities (field `id` is NOT updatable).
+ * Base class for all user-defined entities (field `id` IS updatable).
  */
 @MappedSuperclass
 @Getter
 @Setter
 @ToString
 @SuppressWarnings({"PMD.AbstractClassWithoutAbstractMethod", "checkstyle:LineLength", })
-public abstract class AbstractEntity {
+public abstract class AbstractEntityWithUpdatableId {
 
     @Id
     @UuidGenerator
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", nullable = false)
     protected UUID id;
 
     @Column(name = "created_at", updatable = false)
@@ -53,7 +53,7 @@ public abstract class AbstractEntity {
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) {
             return false;
         }
-        return Objects.equals(id, ((AbstractEntity) other).id);
+        return Objects.equals(id, ((AbstractEntityWithUpdatableId) other).id);
     }
 
     /**
