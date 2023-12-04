@@ -12,7 +12,6 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.UuidGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -26,8 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public abstract class AbstractEntityWithUpdatableId {
 
     @Id
-    @UuidGenerator
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     protected UUID id;
 
     @Column(name = "created_at", updatable = false)

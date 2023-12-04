@@ -4,7 +4,7 @@ apply plugin: "org.springframework.boot"
 bootJar.enabled = false
 jar.enabled = true
 archivesBaseName = "library-persistence"
-project.version = "1.0.1"
+project.version = "1.1.1"
 
 def testcontainersVersion="1.19.1"
 
