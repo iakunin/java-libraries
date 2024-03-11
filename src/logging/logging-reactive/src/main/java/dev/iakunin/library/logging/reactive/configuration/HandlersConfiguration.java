@@ -8,6 +8,7 @@ import dev.iakunin.library.logging.reactive.handler.FingerprintHandler;
 import dev.iakunin.library.logging.reactive.handler.HttpLoggingHandler;
 import dev.iakunin.library.logging.reactive.handler.RequestIdHandler;
 import dev.iakunin.library.logging.reactive.handler.RequestPathHandler;
+import dev.iakunin.library.logging.reactive.handler.RequestQueryStringHandler;
 import dev.iakunin.library.logging.reactive.wrapper.ContextWrapper;
 import dev.iakunin.library.logging.reactive.wrapper.LoggerWrapper;
 import java.util.stream.Collectors;
@@ -56,16 +57,20 @@ public class HandlersConfiguration {
         FieldTrimmer fieldTrimmer,
         ContextWrapper contextWrapper
     ) {
-        return decorated -> new RequestPathHandler(
-            decorated,
-            properties,
-            fieldTrimmer,
-            contextWrapper
-        );
+        return decorated -> new RequestPathHandler(decorated, fieldTrimmer, contextWrapper);
     }
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE + 2)
+    public HttpHandlerDecoratorFactory requestQueryStringHandlerDecorator(
+        FieldTrimmer fieldTrimmer,
+        ContextWrapper contextWrapper
+    ) {
+        return decorated -> new RequestQueryStringHandler(decorated, fieldTrimmer, contextWrapper);
+    }
+
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE + 3)
     public HttpHandlerDecoratorFactory requestIdHandlerDecorator(
         ContextWrapper contextWrapper
     ) {
@@ -73,7 +78,7 @@ public class HandlersConfiguration {
     }
 
     @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE + 3)
+    @Order(Ordered.HIGHEST_PRECEDENCE + 4)
     public HttpHandlerDecoratorFactory httpLoggingHandlerDecorator(
         LoggerWrapper loggerWrapper
     ) {

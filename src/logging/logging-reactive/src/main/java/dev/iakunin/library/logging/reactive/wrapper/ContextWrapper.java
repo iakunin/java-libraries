@@ -9,12 +9,14 @@ import reactor.util.context.ContextView;
 public final class ContextWrapper {
 
     private final String requestPathKey;
+    private final String requestQueryStringKey;
     private final String requestIdKey;
     private final String sessionFingerprintKey;
     private final String processFingerprintKey;
 
     public ContextWrapper(Properties properties) {
         this.requestPathKey = properties.getMdcKeys().getRequest().getPath();
+        this.requestQueryStringKey = properties.getMdcKeys().getRequest().getQueryString();
         this.requestIdKey = properties.getMdcKeys().getRequest().getId();
         this.sessionFingerprintKey = properties.getMdcKeys().getFingerprint().getSession();
         this.processFingerprintKey = properties.getMdcKeys().getFingerprint().getProcess();
@@ -23,6 +25,7 @@ public final class ContextWrapper {
     public Map<String, String> getAll(ContextView context) {
         final Map<String, String> map = new ConcurrentHashMap<>();
         map.put(requestPathKey, getRequestPath(context));
+        map.put(requestQueryStringKey, getRequestQueryString(context));
         map.put(requestIdKey, getRequestId(context));
         map.put(sessionFingerprintKey, getSessionFingerprint(context));
         map.put(processFingerprintKey, getProcessFingerprint(context));
@@ -36,6 +39,14 @@ public final class ContextWrapper {
 
     public String getRequestPath(ContextView context) {
         return context.get(requestPathKey);
+    }
+
+    public Context putRequestQueryString(Context context, String requestQueryString) {
+        return context.put(requestQueryStringKey, requestQueryString);
+    }
+
+    public String getRequestQueryString(ContextView context) {
+        return context.get(requestQueryStringKey);
     }
 
     public Context putRequestId(Context context, String requestId) {

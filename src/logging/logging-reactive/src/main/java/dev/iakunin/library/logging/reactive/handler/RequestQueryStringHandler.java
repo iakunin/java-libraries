@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @RequiredArgsConstructor
-public final class RequestPathHandler implements HttpHandler {
+public final class RequestQueryStringHandler implements HttpHandler {
 
     private final HttpHandler decorated;
     private final FieldTrimmer fieldTrimmer;
@@ -22,10 +22,10 @@ public final class RequestPathHandler implements HttpHandler {
         return decorated.handle(request, response)
             .contextWrite(
                 context -> contextWrapper
-                    .putRequestPath(
+                    .putRequestQueryString(
                         context,
                         fieldTrimmer.trim(
-                            request.getURI().getPath()
+                            request.getURI().getQuery()
                         )
                     )
             );

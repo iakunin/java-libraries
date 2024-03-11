@@ -13,13 +13,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public final class RequestPathFilter extends OncePerRequestFilter {
 
     private final Properties.MdcKeys.Request requestMdcKeys;
-    private final Boolean logQueryString;
     private final FieldTrimmer fieldTrimmer;
 
     public RequestPathFilter(Properties properties, FieldTrimmer fieldTrimmer) {
         super();
         this.requestMdcKeys = properties.getMdcKeys().getRequest();
-        this.logQueryString = properties.isLogQueryString();
         this.fieldTrimmer = fieldTrimmer;
     }
 
@@ -30,23 +28,14 @@ public final class RequestPathFilter extends OncePerRequestFilter {
         FilterChain chain
     ) throws IOException, ServletException {
         try {
-            MDC.put(requestMdcKeys.getPath(), fieldTrimmer.trim(buildPath(request)));
+            MDC.put(requestMdcKeys.getPath(), fieldTrimmer.trim(request.getRequestURI()));
+            MDC.put(requestMdcKeys.getQueryString(), fieldTrimmer.trim(request.getQueryString()));
 
             chain.doFilter(request, response);
         } finally {
             MDC.remove(requestMdcKeys.getPath());
+            MDC.remove(requestMdcKeys.getQueryString());
         }
     }
 
-    private String buildPath(HttpServletRequest request) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(request.getRequestURI());
-
-        final String queryString = request.getQueryString();
-        if (queryString != null && logQueryString) {
-            stringBuilder.append('?').append(queryString);
-        }
-
-        return stringBuilder.toString();
-    }
 }

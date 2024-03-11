@@ -19,7 +19,6 @@ public final class Properties {
     private String requestIdHeader = "x-server-request-id";
     private MdcKeys mdcKeys = new MdcKeys();
     private Integer fieldMaxLength = 20_000;
-    private boolean logQueryString = false;
     private List<MediaType> contentTypeWhitelist = List.of(
         new MediaType("text", "*"),
         MediaType.APPLICATION_JSON,
@@ -53,6 +52,7 @@ public final class Properties {
         public static class Request {
             private String method = "request_method";
             private String path = "request_path";
+            private String queryString = "request_query_string";
             private String body = "request_body";
             private String headers = "request_headers";
             private String clientIp = "client_ip";
