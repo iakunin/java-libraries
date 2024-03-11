@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 GRADLE_CACHE_VOLUME_NAME="iakunin-java-libraries-gradle-cache"
-GRADLE_DOCKER_IMAGE="gradle:7.6.1-jdk11-alpine"
+GRADLE_DOCKER_IMAGE="gradle:7.6.1-jdk17-alpine"
 
 docker run \
     --tty \
