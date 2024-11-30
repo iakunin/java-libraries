@@ -10,7 +10,14 @@ There are:
 * [persistence](https://github.com/iakunin/java-libraries/tree/main/src/persistence) -- unification of work with the database layer.
 * [tests](https://github.com/iakunin/java-libraries/tree/main/src/tests) -- unified approach to application integration testing.
 
+## Using a library in your project
 
-## Setting up project
+Each of the library is published into [GitHub Packages registry](https://github.com/iakunin?tab=packages&repo_name=java-libraries) for simplifying installation using both Maven and Gradle.
+
+- [Installing a library using Maven](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry#installing-a-package).
+- [Installing a library using Gradle](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry#using-a-published-package).
+
+
+## Setting up a project locally
 1. Execute `cp gradle.properties.dist gradle.properties`
 1. Run `./gradlew clean build` to build the project
