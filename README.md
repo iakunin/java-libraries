@@ -18,6 +18,6 @@ Each of the library is published into [GitHub Packages registry](https://github.
 - [Installing a library using Gradle](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry#using-a-published-package).
 
 
-## Setting up a project locally
+## Setting up this project locally
 1. Execute `cp gradle.properties.dist gradle.properties`
 1. Run `./gradlew clean build` to build the project
