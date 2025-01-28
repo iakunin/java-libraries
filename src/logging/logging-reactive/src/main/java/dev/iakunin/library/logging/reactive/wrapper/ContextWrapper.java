@@ -2,6 +2,7 @@ package dev.iakunin.library.logging.reactive.wrapper;
 
 import dev.iakunin.library.logging.common.configuration.Properties;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import reactor.util.context.Context;
 import reactor.util.context.ContextView;
@@ -34,7 +35,7 @@ public final class ContextWrapper {
     }
 
     public Context putRequestPath(Context context, String requestPath) {
-        return context.put(requestPathKey, requestPath);
+        return context.put(requestPathKey, Optional.ofNullable(requestPath).orElse(""));
     }
 
     public String getRequestPath(ContextView context) {
@@ -42,7 +43,7 @@ public final class ContextWrapper {
     }
 
     public Context putRequestQueryString(Context context, String requestQueryString) {
-        return context.put(requestQueryStringKey, requestQueryString);
+        return context.put(requestQueryStringKey, Optional.ofNullable(requestQueryString).orElse(""));
     }
 
     public String getRequestQueryString(ContextView context) {
@@ -50,7 +51,7 @@ public final class ContextWrapper {
     }
 
     public Context putRequestId(Context context, String requestId) {
-        return context.put(requestIdKey, requestId);
+        return context.put(requestIdKey, Optional.ofNullable(requestId).orElse(""));
     }
 
     public String getRequestId(ContextView context) {
@@ -58,7 +59,7 @@ public final class ContextWrapper {
     }
 
     public Context putSessionFingerprint(Context context, String sessionFingerprint) {
-        return context.put(sessionFingerprintKey, sessionFingerprint);
+        return context.put(sessionFingerprintKey, Optional.ofNullable(sessionFingerprint).orElse(""));
     }
 
     public String getSessionFingerprint(ContextView context) {
@@ -66,7 +67,7 @@ public final class ContextWrapper {
     }
 
     public Context putProcessFingerprint(Context context, String processFingerprint) {
-        return context.put(processFingerprintKey, processFingerprint);
+        return context.put(processFingerprintKey, Optional.ofNullable(processFingerprint).orElse(""));
     }
 
     public String getProcessFingerprint(ContextView context) {

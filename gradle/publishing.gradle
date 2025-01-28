@@ -27,8 +27,8 @@ publishing {
         maven {
             url "https://maven.pkg.github.com/iakunin/java-libraries"
             credentials {
-                username = project.findProperty("releaseRepoUser") ?: ""
-                password = project.findProperty("releaseRepoPassword") ?: ""
+                username = project.property("releaseRepoUser")
+                password = project.property("releaseRepoPassword")
             }
         }
     }

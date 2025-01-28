@@ -57,8 +57,8 @@ persistence-publishToRemote:
 
 
 # :src:kafka:key-value-storage
-persistence-publishToLocal:
+kafka-key-value-storage-publishToLocal:
 	bash etc/bin/gradle_in_docker.sh :src:kafka:kafka-key-value-storage:clean :src:kafka:kafka-key-value-storage:publishToMavenLocal
 
-persistence-publishToRemote:
+kafka-key-value-storage-publishToRemote:
 	bash etc/bin/gradle_in_docker.sh :src:kafka:kafka-key-value-storage:clean :src:kafka:kafka-key-value-storage:publish
