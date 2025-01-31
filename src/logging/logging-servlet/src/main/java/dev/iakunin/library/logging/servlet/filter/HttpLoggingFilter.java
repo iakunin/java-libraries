@@ -10,13 +10,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.StopWatch;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.function.RequestPredicate;
+import org.springframework.web.servlet.function.ServerRequest;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Slf4j
@@ -25,7 +27,7 @@ public final class HttpLoggingFilter extends OncePerRequestFilter {
 
     private final RequestLoggerAdapter requestLogger;
     private final ResponseLoggerAdapter responseLogger;
-    private final RequestMatcher requestBlacklist;
+    private final RequestPredicate requestBlacklist;
 
     @Override
     protected void doFilterInternal(
@@ -34,8 +36,7 @@ public final class HttpLoggingFilter extends OncePerRequestFilter {
         FilterChain filterChain
     ) throws ServletException, IOException {
         final var requestWrapper = wrapRequest(request);
-
-        if (requestBlacklist.matches(requestWrapper)) {
+        if (requestBlacklist.test(transform(requestWrapper))) {
             filterChain.doFilter(requestWrapper, response);
             return;
         }
@@ -88,6 +89,10 @@ public final class HttpLoggingFilter extends OncePerRequestFilter {
         }
 
         return false;
+    }
+
+    private ServerRequest transform(HttpServletRequest request) {
+        return ServerRequest.create(request, List.of());
     }
 
     private ContentCachingResponseWrapper wrapResponse(

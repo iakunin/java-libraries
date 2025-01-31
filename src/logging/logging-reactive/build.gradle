@@ -5,7 +5,7 @@ jar.enabled = true
 
 archivesBaseName = "library-logging-reactive"
 
-project.version = "1.0.3"
+project.version = "1.0.4"
 
 apply from: "$rootDir/gradle/publishing.gradle"
 
@@ -14,7 +14,6 @@ dependencies {
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation "org.springframework.boot:spring-boot-starter-webflux"
-    implementation "org.springframework.security:spring-security-web"
     implementation "jakarta.servlet:jakarta.servlet-api:6.0.0"
 
     // needed for MockHttpServletRequest

@@ -5,7 +5,6 @@ import dev.iakunin.library.logging.reactive.adapter.ResponseLoggerAdapter;
 import dev.iakunin.library.logging.reactive.wrapper.BodyCaptureRequest;
 import dev.iakunin.library.logging.reactive.wrapper.BodyCaptureResponse;
 import dev.iakunin.library.logging.reactive.wrapper.LoggerWrapper;
-import jakarta.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -13,16 +12,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.mock.web.reactive.function.server.MockServerRequest;
 import org.springframework.util.StopWatch;
+import org.springframework.web.reactive.function.server.RequestPredicate;
+import org.springframework.web.reactive.function.server.ServerRequest;
 import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
 @Slf4j
 public final class HttpLoggingHandler implements HttpHandler {
 
-    private final RequestMatcher requestBlacklist;
+    private final RequestPredicate requestBlacklist;
     private final HttpHandler decorated;
     private final RequestLoggerAdapter requestLogger;
     private final ResponseLoggerAdapter responseLogger;
@@ -30,7 +30,7 @@ public final class HttpLoggingHandler implements HttpHandler {
 
     @Override
     public Mono<Void> handle(ServerHttpRequest request, ServerHttpResponse response) {
-        if (requestBlacklist.matches(transform(request))) {
+        if (requestBlacklist.test(transform(request))) {
             return decorated.handle(request, response);
         }
 
@@ -61,10 +61,10 @@ public final class HttpLoggingHandler implements HttpHandler {
             }));
     }
 
-    private HttpServletRequest transform(ServerHttpRequest request) {
-        final MockHttpServletRequest result = new MockHttpServletRequest();
-        result.setMethod(Objects.requireNonNull(request.getMethod()).name());
-        result.setServletPath(request.getURI().getPath());
-        return result;
+    private ServerRequest transform(ServerHttpRequest request) {
+        return MockServerRequest.builder()
+            .method(Objects.requireNonNull(request.getMethod()))
+            .uri(request.getURI())
+            .build();
     }
 }

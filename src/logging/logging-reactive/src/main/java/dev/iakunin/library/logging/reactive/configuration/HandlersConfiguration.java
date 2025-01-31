@@ -11,7 +11,6 @@ import dev.iakunin.library.logging.reactive.handler.RequestPathHandler;
 import dev.iakunin.library.logging.reactive.handler.RequestQueryStringHandler;
 import dev.iakunin.library.logging.reactive.wrapper.ContextWrapper;
 import dev.iakunin.library.logging.reactive.wrapper.LoggerWrapper;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -21,11 +20,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.server.reactive.HttpHandlerDecoratorFactory;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.AnyRequestMatcher;
-import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
-import org.springframework.security.web.util.matcher.OrRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.reactive.function.server.RequestPredicate;
+import org.springframework.web.reactive.function.server.RequestPredicates;
 
 @Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
@@ -91,17 +87,17 @@ public class HandlersConfiguration {
         );
     }
 
-    private RequestMatcher requestBlacklist() {
+    private RequestPredicate requestBlacklist() {
+        // no requests will be matched
+        final RequestPredicate noRequestsMather = __ -> false;
+
         if (properties.getExcludePaths().isEmpty()) {
-            // no requests will be matched
-            return new NegatedRequestMatcher(AnyRequestMatcher.INSTANCE);
+            return noRequestsMather;
         }
 
-        return new OrRequestMatcher(
-            properties.getExcludePaths()
-                .stream()
-                .map(AntPathRequestMatcher::new)
-                .collect(Collectors.toList())
-        );
+        return properties.getExcludePaths()
+            .stream()
+            .map(RequestPredicates::path)
+            .reduce(noRequestsMather, RequestPredicate::or);
     }
 }
